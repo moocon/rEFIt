@@ -1,0 +1,20 @@
+#
+# mkefi control file for libefi
+#
+
+name libefi
+type lib
+
+includedir .
+
+source boxdraw.c console.c crc.c data.c debug.c dpath.c
+source error.c event.c guid.c hand.c init.c lock.c misc.c print.c
+source sread.c str.c hw.c smbios.c systable.c
+source runtime/efirtlib.c runtime/lock.c runtime/rtdata.c
+source runtime/str.c runtime/vm.c
+
+source_ia32 ia32/initplat.c ia32/math.c
+
+source_ia64 ia64/initplat.c ia64/math.c ia64/salpal.c ia64/palproc.s
+
+# EOF
