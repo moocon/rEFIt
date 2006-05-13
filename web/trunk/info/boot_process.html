@@ -1,0 +1,96 @@
+<html>
+<head>
+<title>rEFIt - The Intel Mac boot process</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<?php include "inc_head.php"; ?>
+</head>
+<body>
+<?php include "inc_sidebar.php"; ?>
+<div id="content">
+
+<?php include "inc_trail.php"; ?>
+
+
+<h1>The Intel Mac boot process</h1>
+
+<p>
+This page collects information about the boot process on the Intel-based
+Apple Macintosh models.
+</p>
+
+
+<h2>General</h2>
+
+<p>
+The firmware in the Intel Macs is based on the
+<a href="http://www.intel.com/technology/efi/">Extensible Firmware Interface</a>
+specification (EFI for short).
+Actually, Apple has used Intel's reference implementation, called the
+<a href="http://www.intel.com/technology/framework/">Platform Innovation Framework</a>,
+or simply "Framework".
+A stripped-down branch of the Framework has been released as Open Source
+under the name
+<a href="http://www.tianocore.org/">TianoCore</a>.
+All interesting parts of the Framework are written in C, and extensive
+documentation is freely available.
+</p>
+
+
+<h2>Initialization</h2>
+
+<p>
+The firmware is responsible for initializing the hardware and performing a POST
+(Power-On Self Test).
+During this phase, the video hardware will be initialized and set to display
+a blank grey screen.
+</p>
+<p>
+While initializing the hardware the firmware also sets up EFI drivers for all
+relevant hardware devices.
+On the Intel Macs that includes the USB mouse and the IR remote receiver.
+Partitions on disk drives are discovered and file system drivers
+are set up for FAT and HFS+ volumes.
+</p>
+
+
+<h2>Locating the OS Loader</h2>
+
+<p>
+When it comes to locating and loading the OS loader, Apple has customized
+the firmware and deviates from the EFI specification.
+Like on PowerPC Macs, Apple takes a per-volume approach, with a graphical
+boot volume chooser that comes up when you boot with the Option key pressed.
+The default boot volume is stored in NVRAM and can be set through the
+"Startup Disk" preference pane.
+</p>
+<p>
+The HFS+ file system has a special field in the volume header block
+that points to the boot loader file.
+Only partitions with such a pointer are elegible for booting.
+That means that Intel Macs can only boot from HFS+ partitions, and that there
+can only be one OS loader per partition.
+(rEFIt removes both restrictions by posing as a boot loader to the firmware
+and chain-loading the actual OS loader of the user's choice.)
+</p>
+<p>
+The <tt>bless</tt> command in Mac OS X is used to set those information
+fields in the HFS+ volume header.
+It can also change the NVRAM setting for the default boot volume.
+</p>
+
+
+<h2>Booting Mac OS X</h2>
+
+<p>
+The Mac OS X boot loader is located in <tt>/System/Library/CoreServices/boot.efi</tt>.
+When loaded by the firmware, it displays a dark grey Apple logo on the screen.
+Then it loads the Darwin kernel from disk, as well as the essential driver
+extensions. Once the kernel gets control of the machine,
+the rest of the boot process is identical to PowerPC machines.
+</p>
+
+
+<?php include "inc_footer.php"; ?>
+</div>
+</body>
+</html>

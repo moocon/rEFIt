@@ -1,0 +1,81 @@
+<html>
+<head>
+<title>rEFIt - Version History</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<?php include "inc_head.php"; ?>
+</head>
+<body>
+<?php include "inc_sidebar.php"; ?>
+<div id="content">
+
+<?php include "inc_trail.php"; ?>
+
+
+<h1>Version History</h1>
+
+<p>
+Version 0.6 (April 24, 2006):
+</p>
+<ul>
+<li>Directly boots into legacy operating systems installed via Boot Camp.</li>
+<li>Supports multiple legacy operating systems by detecting their
+partitions and changing the active partition flag in the MBR.</li>
+<li>Allows customization through a configuration file.</li>
+</ul>
+
+<p>
+Version 0.5 (April 11, 2006):
+</p>
+<ul>
+<li>Supports legacy operating systems installed via Boot Camp.</li>
+<li>Improved boot options for elilo and XOM.</li>
+</ul>
+
+<p>
+Version 0.4 (April 1, 2006):
+</p>
+<ul>
+<li>The boot menu now has a timeout of 20 seconds. When no key is pressed
+during that time, rEFIt will start the first entry, which will usually be
+Mac OS X on the internal hard disk.</li>
+<li>Each boot entry has a submenu with additional boot options.</li>
+<li>The volume icon is shown as a badge icon on each menu choice, so you
+can visually identify multiple Mac OS X installations.</li>
+<li>All icons have been moved into external .icns files. This makes them
+customizable and saves storage space.</li>
+<li>The icon shown for each boot option can be customized by providing
+a .icns along with the boot loader.</li>
+<li>The remaining internal images are compressed, further reducing
+the size of "refit.efi".</li>
+<li>Apple Hardware Test on the Mac OS X install DVD is detected and
+displayed as a separate entry.</li>
+</ul>
+
+<p>
+Version 0.3 (March 18, 2006):
+</p>
+<ul>
+<li>Graphical boot menu.</li>
+<li>Added detection of the "XpOnMac" bootloader (xom.efi).</li>
+</ul>
+
+<p>
+Version 0.2 (March 13, 2006):
+</p>
+<ul>
+<li>Scan more folders for potential boot loaders.</li>
+<li>Updated the EFI Shell with a version that includes all built-in commands.</li>
+<li>Improved error handling.</li>
+<li>Lots of under-the-hood improvements.</li>
+</ul>
+
+<p>
+Version 0.1 (March 2, 2006):
+</p>
+<p>First public release.</p>
+
+
+<?php include "inc_footer.php"; ?>
+</div>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<html>
+<head>
+<title>rEFIt - Goals and Ideas</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<?php include "inc_head.php"; ?>
+</head>
+<body>
+<?php include "inc_sidebar.php"; ?>
+<div id="content">
+
+<?php include "inc_trail.php"; ?>
+
+
+<h1>Goals and Ideas</h1>
+
+<p>
+The rEFIt project has a wider scope than just the boot menu.
+Some areas that could use attention are:
+</p>
+<ul>
+<li>The rEFIt boot menu itself: additional features, robustness,
+configurability.</li>
+<li>EFI tools: disk partitioning, diagnostics.</li>
+<li>EFI file system drivers for various file systems.</li>
+<li>UI library: evolve the current menu functions into a small UI library,
+or port one of the framebuffer-based GUI libraries to the EFI environment.</li>
+</ul>
+
+<p>
+Some of these points are detailed in the following sections.
+If you have additional ideas, feel free to post them to the
+<a href="http://sourceforge.net/tracker/?group_id=161917&atid=821767">feature request tracker</a>.
+Anyone who wants to actually implement one of the ideas is invited to
+join the project as a developer.
+</p>
+
+
+<h2>Disk partitioning</h2>
+
+<p>
+Boot Camp requires a hybrid GPT/MBR partition table to work properly.
+A first step would be a tool that synchronizes the MBR table with the
+GPT table, so that GPT-aware tools like Apple's Disk Utility or
+<a href="http://www.gnu.org/software/parted/parted.html">GNU Parted</a>
+can be used for the actual partitioning.
+</p>
+
+
+<h2>File system drivers</h2>
+
+<p>
+EFI supports the FAT file system family out of the box, and
+Apple also includes a driver for HFS+. Additional drivers would be
+useful, especially for ext2/ext3 and ISO9660.
+The code in <a href="http://www.gnu.org/software/grub/">GNU grub</a>
+could serve as a starting point.
+</p>
+<p>
+To load the drivers, rEFIt would be extended to load all
+.efi files in the <tt>\efi\refit\drivers</tt> directory automatically.
+</p>
+
+
+<?php include "inc_footer.php"; ?>
+</div>
+</body>
+</html>

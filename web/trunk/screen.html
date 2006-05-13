@@ -1,0 +1,40 @@
+<html>
+<head>
+<title>rEFIt - Screenshot</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<?php include "inc_head.php"; ?>
+</head>
+<body>
+<?php include "inc_sidebar.php"; ?>
+<div id="content">
+
+<?php include "inc_trail.php"; ?>
+
+
+<h1>Screenshot</h1>
+
+<p>
+Here is a screenshot of the graphical boot menu,
+taken using a 0.7 development snapshot.
+A special screenshot function had to be added to rEFIt itself to take
+this picture &ndash; the EFI environment does not come with a screenshot
+utility.
+</p>
+<p>
+The picture was cropped to a useful size; in reality the whole screen
+is used at native resolution (e.g. 1440 x 900) with the menu
+displayed at the center.
+Also note that the OS icons are not fixed. rEFIt automatically detects
+which operating systems are installed on the internal disk as well
+as CDs and external media, and displays an icon for each one.
+</p>
+
+<p align="center">
+<img src="/img/screen1.png" width="512" height="384" hspace="4" vspace="4" alt="[Screenshot]"><br>
+The graphical boot menu
+</p>
+
+<?php include "inc_footer.php"; ?>
+</div>
+</body>
+</html>

@@ -1,0 +1,152 @@
+/*
+ * refit.css
+ */
+
+/*** basic text styles ***/
+
+body {
+  font-family: "Lucida Grande", Verdana, Arial, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: normal;
+  color: #000;
+}
+h1 {
+  font-size: 24px;
+  font-weight: bold;
+}
+h2 {
+  font-size: 18px;
+  font-weight: bold;
+}
+p, li, td {
+  font-size: 14px;
+}
+p#footer {
+  font-size: 12px;
+  text-align: right;
+}
+tt, pre {
+  font-family: Courier, "Courier New", monospace;
+  font-size: 13px;
+}
+a:link, a:visited, a:hover {
+  color: #f46800;
+}
+a:hover {
+  background-color: #f0f0f0;
+}
+a:active {
+  color: #ffc63b;
+  background-color: #fff;
+}
+
+/*** basic layout ***/
+
+body {
+  background: #fff url(/img/back.png) repeat-y;
+  margin: 0;
+  padding: 0;
+}
+div {
+  margin: 0;
+  padding: 0;
+}
+#sidebar {
+  width: 160px;
+  position: absolute;
+  top: 0px;
+  left: 8px;
+  background-color: #f0f0f0;
+}
+#content {
+  padding: 1em 1.5em;
+  margin-left: 168px;
+  background-color: #fff;
+}
+
+/*** content area styles ***/
+
+#trail {
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-top: 0;
+  margin-bottom: 4pt;
+}
+#content h1 {
+  padding: 0 2em 0 0;
+  margin-top: 0;
+  text-align: center;
+}
+#content h1#hometitle {
+  margin-top: 0.5em;
+}
+#content h2 {
+  padding-left: 0.2em;
+  border-bottom: 1px solid #ccc;
+}
+#content p {
+  margin-left: 8pt;
+}
+#content pre, #content table {
+  margin-left: 12pt;
+  margin-right: 6pt;
+}
+
+/*** sidebar styles ***/
+
+#sitelogo, #sflogo, #sfhead {
+  margin: 0;
+  background-color: #d8d8d8;
+  border-bottom: 1px solid #fff;
+}
+#sitelogo {
+  padding: 0;
+  text-align: center;
+}
+#sflogo {
+  padding: 4px 8px;
+  text-align: center;
+}
+#sflogo img {
+  margin: 3px;
+}
+#sflogo a {
+  background-color: #d8d8d8;
+}
+#sfhead {
+  padding: 4px 8px;
+}
+.navlist {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.navlist li {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+.navlist a {
+  display: block;
+  margin: 0;
+  padding: 3px 8px;
+  border-bottom: 1px solid #fff;
+  text-decoration: none;
+}
+.navlist a:link, .navlist a:visited {
+  background-color: #f0f0f0;
+}
+.navlist a:hover {
+  color: #d55a00;
+  background-color: #d8d8d8;
+}
+.navlist a:active {
+  color: #ffc63b;
+  background-color: #fff;
+}
+.navlist a.sublink {
+  padding-left: 16px;
+}
+
+/* EOF */

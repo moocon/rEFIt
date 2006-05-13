@@ -1,0 +1,3 @@
+AddType application/octet-stream .volicon
+AddType application/octet-stream .vollabel
+AddType application/octet-stream .efi

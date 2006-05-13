@@ -1,0 +1,46 @@
+body {
+  font-family: "Lucida Grande", Verdana, Arial, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: normal;
+  color: #000;
+  background-color: #fff;
+  margin: 0;
+  padding: 0;
+}
+#header h1 {
+  font-family: Courier, "Courier New", monospace;
+  margin: 0;
+  padding: 0;
+}
+h1 {
+  font-size: 24px;
+  font-weight: bold;
+}
+h2 {
+  font-size: 18px;
+  font-weight: bold;
+}
+p, li, td {
+  font-size: 14px;
+}
+#first {
+  padding-top: 0;
+  margin-top: 0;
+}
+tt, pre {
+  font-family: Courier, "Courier New", monospace;
+  font-size: 13px;
+}
+div {
+  margin: 0;
+  padding: 0;
+}
+#header {
+  color: #fff;
+  background-color: #00c;
+  padding: 1.5em;
+}
+#content {
+  padding: 1em;
+}
