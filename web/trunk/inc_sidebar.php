@@ -7,9 +7,10 @@
 <li><a href="/#news" class="sublink">News</a></li>
 <li><a href="/#download" class="sublink">Download</a></li>
 <li><a href="/#links" class="sublink">Links</a></li>
+<li><a href="/doc/">Documentation</a></li>
 <li><a href="/history.html">Version History</a></li>
-<li><a href="/screen.html">Screenshot</a></li>
 <li><a href="/goals.html">Goals and Ideas</a></li>
+<li><a href="/screen.html">Screenshot</a></li>
 <li><a href="/info/">Information Repository</a></li>
 </ul>
 

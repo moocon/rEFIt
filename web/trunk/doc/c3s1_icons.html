@@ -1,0 +1,28 @@
+<?php include "inc_doctype.php"; ?>
+<html>
+<head>
+<title>rEFIt - Documentation - Changing the Icons</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<?php include "inc_head.php"; ?>
+</head>
+<body>
+<?php include "inc_sidebar.php"; ?>
+<div id="content">
+
+<?php include "inc_trail.php"; ?>
+
+
+<h1>Changing the Icons</h1>
+
+<p>
+All icons displayed in the main menu are loaded from .icns files in the “efi/refit/icons” directory. Changing those affects the default icons. That is, when you replace “os_mac.icns”, it will be used for Mac OS X on the internal disk as well as the Mac OS X install DVD. In any case, make sure that the icon you use has an icon image for the required resolution — 128x128 for os_*, 48x48 for func_* and tool_*, 32x32 for vol_*.
+</p>
+<p>
+To customize the icon only for a specific boot entry (e.g. Mac OS X on the internal disk), put the .icns file into the same directory as the EFI loader and give it the same name, e.g. “efi/linux/elilo.icns” if you use “elilo.efi”.
+</p>
+
+
+<?php include "inc_footer.php"; ?>
+</div>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<?php include "inc_doctype.php"; ?>
+<html>
+<head>
+<title>rEFIt - Documentation - Starting an Operating System</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<?php include "inc_head.php"; ?>
+</head>
+<body>
+<?php include "inc_sidebar.php"; ?>
+<div id="content">
+
+<?php include "inc_trail.php"; ?>
+
+
+<h1>Starting an Operating System</h1>
+
+<h2>Using the rEFIt menu</h2>
+
+<p>
+The main menu displays two rows of icons. You can navigate the menu with the arrow keys. Press Return or Space to select an entry.
+</p>
+<p>
+The upper row shows all operating system loaders detected on the available storage media. The Mac OS X installation on the internal disk will usually be the first entry. Each entry is badged with a small icon representing the volume it is on. Each boot entry also has a submenu with additional boot options. It can be accessed by pressing ‘+’ or F2.
+</p>
+<p>
+The second row of icons contains additional functions, like starting the EFI shell or restarting the computer.
+</p>
+
+<h2>Boot Camp support</h2>
+<p>
+When you have used Boot Camp to install Windows XP or other legacy-booting operating systems on your Mac, rEFIt will detect that and display them as choices in the menu. Multiple OSes on separate partitions are detected and supported; rEFIt will change the active partition flag accordingly in the MBR before engaging BIOS booting.
+</p>
+<p>
+Note that starting with version 0.6, rEFIt can boot legacy OSes directly, without the additional reboot used in 0.5. It also recognizes common Linux and Windows boot sectors and displays the appropriate icon.
+</p>
+<p>
+For a triple boot setup (Mac OS X, Windows XP, Linux), the recommendations are to install Windows first, and install LILO into the boot sector of the Linux partition, not in the MBR.
+</p>
+<p>
+For a dual boot setup with just Mac OS X and Linux, you can install LILO in the MBR.
+</p>
+
+
+<h2>Starting Linux with elilo</h2>
+<p>
+NOTE: It is currently recommended to boot Linux through BIOS compatibility mode (a.k.a. Boot Camp) using LILO or GRUB. Otherwise, the fully accelerated ATI and Intel graphics drivers will not work.
+</p>
+<p>
+Add a folder inside the “efi” folder. Copy the following files there:
+</p>
+<ul>
+<li>elilo (called either “elilo.efi” or “e.efi”)</li>
+<li>“vmlinuz”</li>
+<li>“initrd.gz” (if present)</li>
+<li>“elilo.conf” (if present)</li>
+</ul>
+<p>
+Make sure that elilo.conf uses relative paths for the “image=” and “initrd=” options (no leading slash). The folder will show up in the rEFIt menu automatically. You can make as many folders with different configurations as you like.
+</p>
+
+
+<?php include "inc_footer.php"; ?>
+</div>
+</body>
+</html>

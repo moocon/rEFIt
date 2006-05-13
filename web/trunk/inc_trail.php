@@ -1,11 +1,17 @@
 <p id="trail">
 Trail: <a href="/">Home</a> &gt;
 <?php
-$self = $_SERVER['PHP_SELF'];
-if (substr($self, 0, 6) == "/info/" && substr($self, -10) != "index.html") {
+
+if ($section == "info" && !$index_html) {
 ?>
 <a href="/info/">Information Repository</a> &gt;
 <?php
 }
+if ($section == "doc" && !$index_html) {
+?>
+<a href="/doc/">Documentation</a> &gt;
+<?php
+}
+
 ?>
 </p>

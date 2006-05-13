@@ -1,0 +1,84 @@
+<?php include "inc_doctype.php"; ?>
+<html>
+<head>
+<title>rEFIt - Documentation - Using the EFI Shell</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<?php include "inc_head.php"; ?>
+</head>
+<body>
+<?php include "inc_sidebar.php"; ?>
+<div id="content">
+
+<?php include "inc_trail.php"; ?>
+
+
+<h1>Using the EFI Shell</h1>
+
+<p>
+The shell allows you to explore the EFI environment by entering text commands. You can also browse disk volumes and start EFI applications. Enter “help” to see a list of built-in commands. To get back to the rEFIt menu, leave the shell with the “exit” command.
+</p>
+
+<h2>rEFIt Tools</h2>
+
+<p>
+The following three tools are part of the rEFIt project and are available
+in the EFI shell:
+</p>
+<dl>
+<dt>gptsync.efi</dt>
+<dd>A tool that synchronizes the legacy MBR partition table with the
+GPT partition table. This gives legacy operating systems and boot loaders
+access to hard disk partitions. Also available directly in the rEFIt menu.</dd>
+<dt>dumpprot.efi</dt>
+<dd>Outputs a list of all EFI handles and the protocols registered for
+them. If possible, protocols are identified with name and basic
+additional information.</dd>
+<dt>TextMode.efi</dt>
+<dd>A small program that switches the EFI console from graphics to
+text mode.</dd>
+</dl>
+
+
+<h2>Additional Tools</h2>
+
+<p>
+The rEFIt distribution contains a current version of the EFI shell from
+the TianoCore project and some additional tools. Here’s a list of the
+tools available in the “efi/tools” folder:
+</p>
+<dl>
+<dt>dhclient.efi</dt>
+<dd>An EFI driver that implements the client side of the DHCP protocol. Can be used to auto-configure TCP/IP networking.</dd>
+<dt>DrawBox.efi</dt>
+<dd>An example program from the EFI Application Toolkit that demonstrates box drawing and other graphic characters in the EFI console environment.</dd>
+<dt>ed.efi</dt>
+<dd>A port of the Unix standard line editor.</dd>
+<dt>edit.efi</dt>
+<dd>A graphical text editor from the EFI Application Toolkit.</dd>
+<dt>ftp.efi</dt>
+<dd>A port of the BSD ftp client.</dd>
+<dt>hexdump.efi</dt>
+<dd>A port of the BSD hexdump tool.</dd>
+<dt>hostname.efi</dt>
+<dd>A port of the BSD hostname tool, used to get and set the machine’s hostname for TCP/IP networking.</dd>
+<dt>ifconfig.efi</dt>
+<dd>A port of the BSD ifconfig tool, used to configure network interfaces for TCP/IP networking.</dd>
+<dt>loadarg.efi</dt>
+<dd>An EFI tool to load a driver with additional arguments.</dd>
+<dt>ping.efi</dt>
+<dd>A port of the BSD ping tool, used to test TCP/IP connectivity.</dd>
+<dt>pppd.efi</dt>
+<dd>An EFI driver that contains a port of the pppd daemon. Adds PPP capabilities to the TCP/IP stack.</dd>
+<dt>route.efi</dt>
+<dd>A port of the BSD route tool, used to configure routing for TCP/IP networking.</dd>
+<dt>tcpipv4.efi</dt>
+<dd>An EFI driver that contains a port of the TCP/IP networking stack from BSD.</dd>
+<dt>which.efi</dt>
+<dd>A shell tool that displays the full path for a command.</dd>
+</dl>
+
+
+<?php include "inc_footer.php"; ?>
+</div>
+</body>
+</html>

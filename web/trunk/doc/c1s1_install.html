@@ -1,0 +1,56 @@
+<?php include "inc_doctype.php"; ?>
+<html>
+<head>
+<title>rEFIt - Documentation - Installing rEFIt</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<?php include "inc_head.php"; ?>
+</head>
+<body>
+<?php include "inc_sidebar.php"; ?>
+<div id="content">
+
+<?php include "inc_trail.php"; ?>
+
+
+<h1>Installing rEFIt</h1>
+
+<h2>Burning a CD</h2>
+<p>
+If you just want to try out rEFIt without affecting your computer,
+you can burn rEFIt to a CD-R (or CD-RW) and boot from that.
+The distributed .dmg and .cdr disk images are ready to burn.
+</p>
+
+<h2>Installing on a disk volume</h2>
+<p>
+When you’re ready to use rEFIt for dual-booting (or even triple-booting),
+you can install it on a hard disk or USB flash drive.
+It is recommended to install it on a separate volume,
+but you can also choose to install rEFIt on your Mac OS X volume.
+</p>
+<p>
+rEFIt should be installed on a HFS+ partition.
+While it is possible to install rEFIt on a FAT volume like the hidden
+EFI System Partition and persuade the firmware to boot it,
+that procedure is quite complex.
+In any case, the kind of partition table doesn’t matter.
+</p>
+<p>
+Copy the “efi” folder from the distribution to the root level of the destination volume.
+Do not put it inside another folder, or some functions won’t work.
+</p>
+<p>
+Open a Terminal window and change to the “refit” folder inside the “efi” folder,
+e.g. “cd /efi/refit”. Run “./enable.sh” to make the partition bootable.
+You must do this under Mac OS X on an Intel-based Macintosh,
+and you will need your administrator password.
+</p>
+<p>
+If you are installing rEFIt to a separate volume, you can use the “rEFIt.icns” icon as a volume icon.
+</p>
+
+
+<?php include "inc_footer.php"; ?>
+</div>
+</body>
+</html>
