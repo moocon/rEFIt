@@ -21,6 +21,7 @@ Some areas that could use attention are:
 <ul>
 <li>The rEFIt boot menu itself: additional features, robustness,
 configurability.</li>
+<li>Mac OS X integration: installation, Startup Disk work-alike.</li>
 <li>EFI tools: disk partitioning, diagnostics.</li>
 <li>EFI file system drivers for various file systems.</li>
 <li>UI library: evolve the current menu functions into a small UI library,
@@ -36,15 +37,76 @@ join the project as a developer.
 </p>
 
 
-<h2>Disk partitioning</h2>
+<h2>Boot Menu</h2>
+
+<p>
+Some ideas for the boot menu and its UI infrastructure:
+</p>
+<ul>
+<li>Full configurability for OS entries. Configurable default entry.</li>
+<li>Remember the last chosen entry (in NVRAM), make it the default entry
+on the next boot.</li>
+<li>Configurable screen background color, selection highlight color
+(submenus), text color.</li>
+<li>Allow the CD to be ejected from within the boot menu.</li>
+<li>Network support.</li>
+</ul>
+
+
+<h2>UI Infrastructure</h2>
+
+<p>
+The graphical functions of the boot menu have already been split into
+a separate module. Some plans here:
+</p>
+<ul>
+<li>Improve text rendering: Loadable fonts, antialiased default font</li>
+<li>Support loading PNG and JPEG image files in addition to BMP.</li>
+<li>Mouse support.</li>
+<li>Support for the Apple IR Remote as in the built-in chooser.
+(This may require talking directly to the USB HID driver.)</li>
+</ul>
+
+
+<h2>Mac OS X Integration</h2>
+
+<p>
+To improve user friendliness, there is a need to provide better
+integration with Mac OS X. Some ideas:
+</p>
+<ul>
+<li>Make a Startup Item to solve the Mac OS X Update and the Safe Sleep
+issues.</li>
+<li>Make an OS X Installer package (.pkg) that takes care of installation
+and <tt>bless</tt>ing.</li>
+<li>Provide an application to automate installation and as a replacement
+for the Startup Disk preference pane.</li>
+<li>Provide a flexible partitioning tool as a replacement for
+the limited Boot Camp Assistant.</li>
+</ul>
+
+
+<h2>Disk Partitioning</h2>
 
 <p>
 Boot Camp requires a hybrid GPT/MBR partition table to work properly.
-A first step would be a tool that synchronizes the MBR table with the
-GPT table, so that GPT-aware tools like Apple's Disk Utility or
+rEFIt includes a tool to update the MBR table after editing the GPT table,
+but it would be much better to have partitioning tools that support
+the hybrid format directly.
 <a href="http://www.gnu.org/software/parted/parted.html">GNU Parted</a>
-can be used for the actual partitioning.
+looks promising &mdash; it already supports GPT, and has file system
+resizing code for most common file systems. Some tasks:
 </p>
+<ul>
+<li>Improve the <tt>gptsync</tt> tool: file system detection for
+GPT Basic Data partitions, robustness.</li>
+<li>Improve GNU parted to work properly on Intel Macs:
+HFS+ little-endian issues, HFS+ GPT partition type,
+hybrid GPT/MBR format.</li>
+<li>Port GNU parted to Mac OS X (Terminal and/or Cocoa GUI).</li>
+<li>Port GNU parted to the EFI environment. (This is currently on hold
+in favour of a Linux rescue system.)</li>
+</ul>
 
 
 <h2>File system drivers</h2>
