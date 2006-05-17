@@ -18,15 +18,15 @@
 
 <ul id="sfnav" class="navlist">
 <li><a href="http://sourceforge.net/projects/refit">Project Summary</a></li>
-<li><a href="http://sourceforge.net/tracker/?group_id=161917&atid=821764">Bug Reports</a></li>
-<li><a href="http://sourceforge.net/tracker/?group_id=161917&atid=821767">Feature Requests</a></li>
-<li><a href="http://sourceforge.net/tracker/?group_id=161917&atid=821766">Patches</a></li>
+<li><a href="http://sourceforge.net/tracker/?group_id=161917&amp;atid=821764">Bug Reports</a></li>
+<li><a href="http://sourceforge.net/tracker/?group_id=161917&amp;atid=821767">Feature Requests</a></li>
+<li><a href="http://sourceforge.net/tracker/?group_id=161917&amp;atid=821766">Patches</a></li>
 <li><a href="http://sourceforge.net/svn/?group_id=161917">Subversion</a></li>
 </ul>
 
 <p id="sflogo">
 Hosted by<br>
-<a href="http://sourceforge.net/"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=161917&type=1" width="88" height="31" border="0" alt="SourceForge.net"></a>
+<a href="http://sourceforge.net/"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=161917&amp;type=1" width="88" height="31" border="0" alt="SourceForge.net"></a>
 </p>
 
 </div>
