@@ -1,4 +1,5 @@
 <?php
+// $Id$
 
 $docmap = array(
   array("c1s1_install.html", "Installing rEFIt"),

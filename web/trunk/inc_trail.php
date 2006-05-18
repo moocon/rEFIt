@@ -1,3 +1,7 @@
+<?php
+// $Id$
+?>
+
 <p id="trail">
 Trail: <a href="/">Home</a> &gt;
 <?php

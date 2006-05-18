@@ -1,3 +1,7 @@
+<?php
+// $Id$
+?>
+
 <div id="sidebar">
 
 <p id="sitelogo"><a href="/"><img src="/img/refit_logo.png" alt="rEFIt" width="160" height="64" border="0"></a></p>
