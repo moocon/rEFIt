@@ -1,5 +1,5 @@
 /*
- * refit.css
+ * $Id$
  */
 
 /*** basic text styles ***/
@@ -32,10 +32,8 @@ dd {
 li {
   margin-bottom: 0.2em;
 }
-p#footer {
-  margin-top: 1.5em;
+p#vcinfo, p#copyright {
   font-size: 12px;
-  text-align: right;
 }
 tt, pre {
   font-family: Courier, "Courier New", monospace;
@@ -71,9 +69,11 @@ div {
   background-color: #f0f0f0;
 }
 #content {
-  padding: 1em 1.5em;
+  padding: 1em 2em 0;
   margin-left: 168px;
   background-color: #fff;
+  min-width: 20em;
+  max-width: 45em;
 }
 
 /*** content area styles ***/
@@ -93,20 +93,41 @@ div {
   margin-top: 0.5em;
 }
 #content h2 {
+  margin-left: -8pt;
+  margin-right: -8pt;
   padding-left: 0.2em;
+  padding-right: 8pt;
   border-bottom: 1px solid #ccc;
   clear: both;
 }
-#content p, #content dl, #content ul {
-  margin-left: 8pt;
-}
 #content pre, #content table {
-  margin-left: 12pt;
+  margin-left: 6pt;
   margin-right: 6pt;
 }
 p#pagelink {
   margin-top: 1.5em;
   text-align: center;
+}
+
+#footer {
+  margin: 1.5em -8pt 0;
+  padding: 0.7em 8pt 1em;
+  border-top: 1px solid #ccc;
+}
+p#vcinfo {
+  float: left;
+  width: 55%;
+  text-align: left;
+  margin: 0;
+}
+p#copyright {
+  float: right;
+  width: 42%;
+  text-align: right;
+  margin: 0;
+}
+#footerclear {
+  clear: both;
 }
 
 /*** sidebar styles ***/
