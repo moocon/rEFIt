@@ -19,17 +19,35 @@ include "inc_doctype.php";
 
 <h1>Restricting Access</h1>
 
-<!--
+<p>
+You may want to remove the EFI shell from the menu,
+for example in a student lab setting.
+Here are some options to lock rEFIt down.
+</p>
+
 <h2>Disabling Tools</h2>
 <p>
 The “disable” command in the configuration file allows you to
 remove some or all of the entries from the lower row of the boot menu.
+That way you can prevent users from accessing the EFI shell
+through rEFIt.
 </p>
--->
 
 <h2>Removing the Shell and Tools</h2>
 <p>
-You may want to remove the EFI shell from the menu, for example in a student lab setting. Simply remove the “efi/tools” folder. (Also remove the “efi/refit/apps” folder if you still have it from an earlier version of rEFIt.) When the “Shell.efi” file is not found, the corresponding menu choice disappears automatically.
+If you want to be extra sure that the EFI shell is not accessible,
+you can simply remove the “efi/tools” folder.
+(Also remove the “efi/refit/apps” folder if you still have it from
+an earlier version of rEFIt.)
+rEFIt only shows icons for the tools that are actually present on the disk,
+so this has the same effect as the “disable” command described above.
+</p>
+
+<h2>Password Protection</h2>
+<p>
+rEFIt currently does <u>not</u> allow you to password-protect specific menu
+entries. Also, since “refit.efi” is configured as the legitimate boot loader,
+it effectively circumvents the firmware password protection.
 </p>
 
 
