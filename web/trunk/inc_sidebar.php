@@ -4,7 +4,7 @@
 
 <div id="sidebar">
 
-<p id="sitelogo"><a href="/"><img src="/img/refit_logo.png" alt="rEFIt" width="160" height="64" border="0"></a></p>
+<p id="sitelogo"><a href="/"><img src="/img/refit_logo.png" alt="rEFIt" width="160" height="64"></a></p>
 
 <ul id="sitenav" class="navlist">
 <li><a href="/">Home</a></li>
@@ -30,7 +30,7 @@
 
 <p id="sflogo">
 Hosted by<br>
-<a href="http://sourceforge.net/"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=161917&amp;type=1" width="88" height="31" border="0" alt="SourceForge.net"></a>
+<a href="http://sourceforge.net/"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=161917&amp;type=1" width="88" height="31" alt="SourceForge.net"></a>
 </p>
 
 </div>
