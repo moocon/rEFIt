@@ -49,6 +49,10 @@ a:active {
   color: #ffc63b;
   background-color: #fff;
 }
+img {
+  border: 0;
+  padding: 0;
+}
 
 /*** basic layout ***/
 
@@ -107,6 +111,12 @@ div {
 p#pagelink {
   margin-top: 1.5em;
   text-align: center;
+}
+p.picture {
+  text-align: center;
+}
+p.picture img {
+  margin: 4px;
 }
 
 #footer {
