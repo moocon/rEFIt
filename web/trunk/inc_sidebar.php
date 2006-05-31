@@ -4,7 +4,7 @@
 
 <div id="sidebar">
 
-<p id="sitelogo"><a href="/"><img src="/img/refit_logo.png" alt="rEFIt" width="160" height="64"></a></p>
+<p id="sitenavhead">Site Navigation:</p>
 
 <ul id="sitenav" class="navlist">
 <li><a href="/">Home</a></li>
@@ -18,7 +18,7 @@
 <li><a href="/info/">Information Repository</a></li>
 </ul>
 
-<p id="sfhead">On SourceForge:</p>
+<p id="sfnavhead">On SourceForge:</p>
 
 <ul id="sfnav" class="navlist">
 <li><a href="http://sourceforge.net/projects/refit">Project Summary</a></li>
