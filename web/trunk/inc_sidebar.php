@@ -12,6 +12,7 @@
 <li><a href="/#download" class="sublink">Download</a></li>
 <li><a href="/#links" class="sublink">Links</a></li>
 <li><a href="/doc/">Documentation</a></li>
+<li><a href="/doc/c1s1_install.html" class="sublink">Installation</a></li>
 <li><a href="/history.html">Version History</a></li>
 <li><a href="/goals.html">Goals and Ideas</a></li>
 <li><a href="/screen.html">Screenshot</a></li>
