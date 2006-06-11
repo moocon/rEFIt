@@ -3,26 +3,15 @@
 
 // Documentation section: automatic "next" and "up" links
 if ($section == "doc") {
-  include "inc_docmap.php";
-  if ($index_html) {
-    $nextdocpage = $docmap[0];
-  } else {
-    do {
-      $currentpage = current($docmap);
-      if ($currentpage[0] == $selfname)
-        $nextdocpage = next($docmap);
-    } while (next($docmap));
-  }
-  
-  print '<p id="pagelink">';
+  print '<p id="pagelink">'."\n";
   if ($nextdocpage) {
-    print 'Next: <a href="'.$nextdocpage[0].'">'.$nextdocpage[1].'</a>';
+    print 'Next: <a href="'.$nextdocpage[0].'">'.$nextdocpage[1].'</a>'."\n";
     if (!$index_html)
       print '<br>';
   }
   if (!$index_html)
-    print 'Up: <a href="index.html">Contents</a>';
-  print '</p>';
+    print 'Up: <a href="index.html">Contents</a>'."\n";
+  print '</p>'."\n";
 }
 
 ?>
@@ -45,7 +34,7 @@ if ($vc_author) {
   } else {
     $date = filemtime($_SERVER['PATH_TRANSLATED']);
   }
-  print '<p id="vcinfo">Last changed by '.$author.' on '.strftime("%a, %b %d %Y", $date).'</p>';
+  print '<p id="vcinfo">Last changed by '.$author.' on '.strftime("%a, %b %d %Y", $date).'</p>'."\n";
 }
 
 ?>
