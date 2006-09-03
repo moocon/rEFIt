@@ -113,9 +113,21 @@ div {
   border-bottom: 1px solid #ccc;
   clear: both;
 }
-#content pre, #content table {
+#content pre {
   margin-left: 6pt;
   margin-right: 6pt;
+}
+#content table {
+  margin: 1em 6pt;
+  padding: 0;
+  border: none;
+  border-collapse: collapse;
+}
+#content table td, #content table th {
+  border: 2px solid #999;
+  margin: 0;
+  padding: 3px;
+  vertical-align: top;
 }
 p#pagelink {
   margin-top: 1.5em;
