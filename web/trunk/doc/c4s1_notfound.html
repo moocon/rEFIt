@@ -1,0 +1,52 @@
+<?php
+$vc_author = '$Author$';
+$vc_date   = '$Date$';
+
+include "inc_doctype.php";
+?>
+<html>
+<head>
+<title>rEFIt - Documentation - Legacy Booting: Not Found Error</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<?php include "inc_head.php"; ?>
+</head>
+<body>
+<?php include "inc_logo.php"; ?>
+<div id="content">
+
+<?php include "inc_trail.php"; ?>
+
+
+<h1>Legacy Booting: Not Found Error</h1>
+
+<p>
+Problem: When choosing a legacy operating system (e.g. Windows) from
+the rEFIt boot menu, you get an error message saying
+"<tt>Error: Not found while loading legacy loader</tt>".
+</p>
+
+<p>
+Solution: If you have a Mac Pro, this is a known problem that is being
+worked on.
+</p>
+<p>
+If you have another model of Intel Mac:
+To boot legacy operating systems on the iMac, MacBook Pro (15")
+or Mac mini,
+you need to install the firmware updates published together
+with Boot Camp.
+Here's a table of the firmware versions as seen in System Profiler:
+</p>
+<table border="1" cellpadding="3" cellspacing="0">
+<tr><th>Model</th><th>Original firmware</th><th>Boot Camp enabled firmware</th></tr>
+<tr><td>iMac</td><td>IM41.0039.B00</td><td>IM41.0055.B03</td></tr>
+<tr><td>MacBook Pro 15"</td><td>MBP11.0044.B02</td><td>MBP11.0055.B03</td></tr>
+<tr><td>Mac mini</td><td>MM11.004B.B00</td><td>MM11.0055.B03</td></tr>
+</table>
+
+
+<?php include "inc_footer.php"; ?>
+</div>
+<?php include "inc_sidebar.php"; ?>
+</body>
+</html>

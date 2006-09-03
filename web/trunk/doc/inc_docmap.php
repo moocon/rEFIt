@@ -12,6 +12,7 @@ $docmap = array(
   array("c3s1_icons.html", "Changing the Icons"),
   array("c3s2_access.html", "Restricting Access"),
   array("c3s3_config.html", "The refit.conf Configuration File"),
+  array("c4s1_notfound.html", "Legacy Booting: Not Found Error"),
 );
 
 ?>
