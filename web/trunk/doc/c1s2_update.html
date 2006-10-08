@@ -19,8 +19,25 @@ include "inc_doctype.php";
 
 <h1>Upgrading rEFIt</h1>
 
+<h2>Using the Installer Package</h2>
 <p>
-If you have an earlier version of rEFIt installed, just replace it with the files from this distribution and run “enable.sh” again. Make sure that you don’t forget the “icons” folder, or the boot menu will look quite dull.
+If you have a previous version of rEFIt installed in the standard location
+on your Mac OS X volume, you can use the installer package to upgrade to
+version 0.8. Just follow the steps for
+<a href="c1s1_install.html">installation</a>.
+</p>
+<p>
+Note that the installer package may overwrite your customized
+configuration file or icons.
+</p>
+
+<h2>Manual Upgrade</h2>
+<p>
+To manually upgrade an installation of rEFIt, just replace it with the
+files from the current distribution.
+Copy everything in the “efi” folder, only skipping the files you have
+customized and want to keep.
+Afterwards, run “enable.sh” again to make sure rEFIt is properly blessed.
 </p>
 
 

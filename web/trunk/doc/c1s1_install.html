@@ -27,11 +27,13 @@ The distributed .dmg and .cdr disk images are ready to burn.
 </p>
 
 
-<h2>Installing on the Mac OS X volume</h2>
+<h2>Automatic Installation with the Installer Package</h2>
 <p>
-The most common way to install and use rEFIt is on the Mac OS X installation
-volume on the internal hard disk.
-This requires no additional volumes or disks.
+Both disk image distributions (.dmg and .cdr) also contain the new
+installer package.
+It will install rEFIt on your Mac OS X installation volume and
+make sure it is active.
+This is now the recommended way to install and use rEFIt.
 </p>
 <p>
 The steps to install rEFIt this way are as follows:
@@ -40,7 +42,34 @@ The steps to install rEFIt this way are as follows:
 <li>Download and mount the
 <a href="http://prdownloads.sourceforge.net/refit/rEFIt-0.8.dmg?download">rEFIt-0.8.dmg</a>
 disk image.</li>
-<li>Copy the “efi” folder from the disk image to the root level of
+<li>Double-click on the “rEFIt.mpkg” package.</li>
+<li>Follow the instructions and select your Mac OS X installation
+volume as the destination volume for the install.</li>
+</ol>
+<p>
+If everything went well, you’ll see the rEFIt boot menu on the next
+restart.
+</p>
+
+
+<h2>Manual Installation on the Mac OS X volume</h2>
+<p>
+If you don’t want to use the installer package, you can do a manual
+install instead.
+This section explains how to do a manual install to your
+Mac OS X installation volume, which requires no additional
+volumes or disks.
+It is possible to install rEFIt elsewhere; see the following sections
+for that.
+</p>
+<p>
+Here are the steps for a manual install:
+</p>
+<ol>
+<li>Download the “Mac disk image” or any of the other two binary
+distributions from the home page. Double-click to mount or unpack
+them.</li>
+<li>Copy the “efi” folder from the rEFIt distribution to the root level of
 your Mac OS X volume.</li>
 <li>Open Terminal and enter the following commands:
 <pre>cd /efi/refit
@@ -48,21 +77,25 @@ your Mac OS X volume.</li>
 When prompted, enter the password for your user account.</li>
 </ol>
 <p>
+If everything went well, you’ll see the rEFIt boot menu on the next
+restart.
+</p>
+<p>
 Note: If you get a message saying “No such file or directory” in
-the last step, then you didn't put the “efi” folder in the right
+the last step, then you didn’t put the “efi” folder in the right
 place in step 2.
 </p>
 <p>
-If you downloaded the .cdr image or the .tar.gz archive, you can use
-that instead. The contents are the same for all three formats.
-The .cdr image can be mounted like a disk image, and the
-.tar.gz archive can be extracted by double-clicking it.
+This manual installation method has a drawback that you should be
+aware of.
+Since you’re not using rEFItBlesser, Mac OS X updates will disable rEFIt,
+and the rEFIt menu will show up even when waking from Safe Sleep.
 </p>
 
 
 <h2>Installing on a separate volume or external disk</h2>
 <p>
-If you're uncomfortable with having rEFIt on your Mac OS X volume,
+If you’re uncomfortable with having rEFIt on your Mac OS X volume,
 you can install it on any other volume, as long as it is formatted
 in the HFS+ (“Mac OS Extended”) format. For example, you can install
 rEFIt on a USB flash drive.

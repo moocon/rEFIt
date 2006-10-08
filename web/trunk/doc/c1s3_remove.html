@@ -20,10 +20,42 @@ include "inc_doctype.php";
 <h1>Removing rEFIt</h1>
 
 <p>
-To get rid of rEFIt, open the “Startup Disk” preference pane and select “Mac OS X” as the operating system to boot. This will re-bless your Mac OS X volume and instruct the firmware to boot from it. After this, you can remove the “efi” folder.
+The procedure to remove rEFIt depends on which method you used to install it.
 </p>
 <p>
-In case your Mac OS X installation on the hard disk no longer boots, you can boot from the Mac OS X Install Disc (hold down the ‘C’ key while booting) and run “Startup Disk” from the “Utilities” menu.
+The instructions on this page assume you installed rEFIt on your
+Mac OS X volume.
+If rEFIt is installed on a separate volume, simply select a different
+volume to start up from, or wipe that volume.
+</p>
+
+<h2>Removal when using rEFItBlesser</h2>
+<p>
+If you installed through the installer package, these instructions are
+for you.
+</p>
+<p>
+While booted into Mac OS X, rename or remove the “efi” folder.
+For a 100% clean de-installation, also remove the folder “rEFItBlesser”
+inside “Library/StartupItems”.
+</p>
+
+<h2>Removal for manual installs</h2>
+<p>
+First, open the “Startup Disk” preference pane and select “Mac OS X”
+as the operating system to boot.
+This will re-bless your Mac OS X volume and instruct the firmware
+to boot from it.
+After this, rename or remove the “efi” folder.
+</p>
+
+<h2>Troubleshooting</h2>
+<p>
+If Mac OS X no longer starts up after removing rEFIt,
+boot from the Mac OS X Install Disc (hold down the ‘C’ key while booting)
+and run “Startup Disk” from the “Utilities” menu.
+There, select “Mac OS X” on your hard disk as the operating system
+to boot.
 </p>
 
 
