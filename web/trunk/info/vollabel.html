@@ -7,7 +7,7 @@ include "inc_doctype.php";
 <html>
 <head>
 <title>rEFIt - Volume Labels</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <?php include "inc_head.php"; ?>
 </head>
 <body>
@@ -20,9 +20,9 @@ include "inc_doctype.php";
 <h1>Volume Labels</h1>
 
 <p>
-The built-in boot volume chooser displays the name of each volume below
-its icon. This page describes how that volume name label is stored and
-rendered.
+The boot volume chooser built into the Intel Mac firmware
+displays the name of each volume below its icon.
+This page describes how that volume name label is stored and rendered.
 </p>
 
 
@@ -38,7 +38,7 @@ done it for a long time on Open Firmware based PowerPC Macs as well.
 <p>
 The volume label is stored as a pre-rendered image file in a special format.
 The file with the image has a well-known name and is located in the
-"blessed folder", alongside the OS loader. That makes it easy for the
+“blessed folder”, alongside the OS loader. That makes it easy for the
 boot volume chooser to find and display the label.
 </p>
 
@@ -74,16 +74,16 @@ The 16 grey values, from white to black:
 <p>
 Mac OS X automatically creates labels for volumes that have Mac OS X installed.
 (Note: It is not yet known whether this is done by the Installer, by the
-"Startup Disk" preference pane, or both.)
-These labels use only black and white, i.e. they don't render the text with
+“Startup Disk” preference pane, or both.)
+These labels use only black and white, i.e. they don’t render the text with
 anti-aliasing. The reason for this is unknown.
 </p>
 <p>
 The <tt>bless</tt> command line tool, which is used to set the blessed folder
 and the OS loader file, has some options to set the label for the affected disk.
 With the <tt>--label</tt> option, <tt>bless</tt> does the text rendering.
-It tries to use anti-aliasing, but unfortunately doesn't create readable labels
-in the process. Apparently it doesn't use the correct table for translating
+It tries to use anti-aliasing, but unfortunately doesn’t create readable labels
+in the process. Apparently it doesn’t use the correct table for translating
 greyscale values to palette indices.
 </p>
 <p>

@@ -7,7 +7,7 @@ include "inc_doctype.php";
 <html>
 <head>
 <title>rEFIt - The Intel Mac boot process</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <?php include "inc_head.php"; ?>
 </head>
 <body>
@@ -30,10 +30,10 @@ Apple Macintosh models.
 <p>
 The firmware in the Intel Macs is based on the
 <a href="http://www.intel.com/technology/efi/">Extensible Firmware Interface</a>
-specification (EFI for short).
-Actually, Apple has used Intel's reference implementation, called the
+(EFI) specification.
+Actually, Apple has used Intel’s reference implementation, called the
 <a href="http://www.intel.com/technology/framework/">Platform Innovation Framework</a>,
-or simply "Framework".
+also called just “Framework” or “Tiano”, its development codename.
 A stripped-down branch of the Framework has been released as Open Source
 under the name
 <a href="http://www.tianocore.org/">TianoCore</a>.
@@ -59,31 +59,47 @@ are set up for FAT and HFS+ volumes.
 </p>
 
 
-<h2>Locating the OS Loader</h2>
+<h2>Operating System Selection</h2>
 
 <p>
-When it comes to locating and loading the OS loader, Apple has customized
-the firmware and deviates from the EFI specification.
+When it comes to locating and loading operating systems, Apple has
+customized the firmware.
 Like on PowerPC Macs, Apple takes a per-volume approach, with a graphical
 boot volume chooser that comes up when you boot with the Option key pressed.
 The default boot volume is stored in NVRAM and can be set through the
-"Startup Disk" preference pane.
+“Startup Disk” preference pane.
 </p>
 <p>
-The HFS+ file system has a special field in the volume header block
-that points to the boot loader file.
-Only partitions with such a pointer are elegible for booting.
-That means that Intel Macs can only boot from HFS+ partitions, and that there
-can only be one OS loader per partition.
-(rEFIt removes both restrictions by posing as a boot loader to the firmware
-and chain-loading the actual OS loader of the user's choice.)
+Under the hood, things are a bit complicated.
+Apple’s firmware uses most of the EFI infrastructure,
+but has both extended the base functionality and added its own UI on top.
 </p>
 <p>
-The <tt>bless</tt> command in Mac OS X is used to set those information
-fields in the HFS+ volume header.
-It can also change the NVRAM setting for the default boot volume.
+The main extension is that for HFS+ volumes, there is no need to
+specify the full path to the actual boot loader.
+Instead, HFS+ volume header fields are used to point to a
+“blessed file” to be loaded as an EFI application.
+When this feature is used, the NVRAM variables contain just the device path
+to the disk partition, without any file path.
 </p>
-
+<p>
+For booting legacy BIOS-based operating systems,
+Apple takes a completely non-standard approach.
+The CSM (compatibility support module) is not loaded at all by default.
+When the decision is made to boot a BIOS-based operating system,
+a special EFI application is loaded from the firmware ROM to kick off
+the BIOS boot process.
+When the user chooses Windows as the default operating system in the
+“Startup Disk” pane,
+the NVRAM variables are actually set to point at this special loader,
+plus a parameter that tells it which device to boot from.
+</p>
+<p>
+In addition to these two main booting methods,
+the firmware also supports booting from the network
+and booting an EFI loader specified by a full file path on
+an accessible FAT volume.
+</p>
 
 <h2>Booting Mac OS X</h2>
 
@@ -93,6 +109,29 @@ When loaded by the firmware, it displays a dark grey Apple logo on the screen.
 Then it loads the Darwin kernel from disk, as well as the essential driver
 extensions. Once the kernel gets control of the machine,
 the rest of the boot process is identical to PowerPC machines.
+</p>
+
+<h2>Booting a BIOS-based Operating System</h2>
+
+<p>
+Once the compatibility support module (CSM) is engaged,
+the boot process proceeds the same way as on a standard PC.
+For hard disk boots, the master boot record (MBR) is loaded into RAM
+and executed.
+In most cases, the MBR holds code that loads the boot sector of the
+active partition,
+which then contains actual OS loader code.
+</p>
+
+<h2>The Role of bless</h2>
+
+<p>
+The <tt>bless</tt> command has two functions.
+One is to fill in the special fields in the HFS+ volume header.
+As outlined above, this lets the firmware boot Mac OS X just by
+picking a volume.
+The other role is in setting the NVRAM variables for the default
+operating system to boot.
 </p>
 
 
