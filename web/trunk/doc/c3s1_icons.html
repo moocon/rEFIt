@@ -20,10 +20,88 @@ include "inc_doctype.php";
 <h1>Changing the Icons</h1>
 
 <p>
-All icons displayed in the main menu are loaded from .icns files in the “efi/refit/icons” directory. Changing those affects the default icons. That is, when you replace “os_mac.icns”, it will be used for Mac OS X on the internal disk as well as the Mac OS X install DVD. In any case, make sure that the icon you use has an icon image for the required resolution — 128x128 for os_*, 48x48 for func_* and tool_*, 32x32 for vol_*.
+All icons displayed in the main menu are loaded from .icns files
+in the “efi/refit/icons” directory.
+Changing those affects the default icons.
+The icons are grouped using prefixes like “os_” or “tool_”
+to show what they’re used for.
+The following sections describe each group.
+</p>
+
+
+<h2>Operating System Icon by System</h2>
+<p>
+rEFIt tries to identify which operating system the detected boot loaders
+belong to, and assigns an icon based on that.
+In some cases, it will look for several icon names,
+to allow targeted customization of the default icons.
+The following tables list the icon file names searched for
+EFI loaders and for BIOS boot sectors, as of rEFIt 0.8.
+</p>
+
+<table>
+<tr><th>EFI Loader Name</th><th>Icon Names</th></tr>
+<tr><td>/S/L/C/boot.efi</td><td>os_mac</td></tr>
+<tr><td>diags.efi</td><td>os_hwtest</td></tr>
+<tr><td>elilo.efi, e.efi</td><td>os_elilo, os_linux</td></tr>
+<tr><td>cdboot.efi, bootmgr.efi, bootmgfw.efi</td><td>os_win</td></tr>
+<tr><td>xom.efi</td><td>os_xom, os_win</td></tr>
+<tr><td>(others)</td><td>os_unknown</td></tr>
+</table>
+
+<table>
+<tr><th>Detected BIOS Loader</th><th>Icon Names</th></tr>
+<tr><td>LILO, SYSLINUX, ISOLINUX</td><td>os_linux</td></tr>
+<tr><td>GRUB</td><td>os_grub, os_linux</td></tr>
+<tr><td>FreeBSD</td><td>os_freebsd</td></tr>
+<tr><td>OpenBSD</td><td>os_openbsd</td></tr>
+<tr><td>Windows NTLDR (NT4 to XP)</td><td>os_win</td></tr>
+<tr><td>Windows BOOTMGR (Vista)</td><td>os_winvista, os_win</td></tr>
+<tr><td>FreeDOS</td><td>os_freedos</td></tr>
+<tr><td>eComStation (OS2LDR or OS2BOOT)</td><td>os_ecomstation</td></tr>
+<tr><td>BeOS</td><td>os_beos</td></tr>
+<tr><td>yellowTab ZETA</td><td>os_zeta, os_beos</td></tr>
+<tr><td>Haiku</td><td>os_haiku, os_beos</td></tr>
+<tr><td>(others)</td><td>os_legacy</td></tr>
+</table>
+
+<p>
+When booting a BIOS-based operating system,
+rEFIt will also look for a corresponding “boot_” icon to show
+in the center of the blank grey screen while the firmware brings up
+its BIOS compatibility layer.
+If no such icon is found, “os_legacy” is used as a fallback.
 </p>
 <p>
+If you replace or add any of these icons, make sure it has
+a 128x128 pixel icon image.
+</p>
+
+<h2>Operating System Icon by EFI Loader</h2>
+<p>
 To customize the icon only for a specific boot entry (e.g. Mac OS X on the internal disk), put the .icns file into the same directory as the EFI loader and give it the same name, e.g. “efi/linux/elilo.icns” if you use “elilo.efi”.
+Note that this method only works for operating systems that load through EFI,
+not for legacy BIOS-based systems.
+</p>
+
+<h2>Volume Icons</h2>
+<p>
+rEFIt automatically tries to load custom volume icons.
+However, this only works for HFS+ and FAT volumes;
+other file systems are not supported by the Mac firmware.
+These volumes will get the default volume icons depending on their type.
+You can customize the default icons by replacing the icon files
+starting with “vol_”.
+Make sure all volume icons (including custom icons)
+have a native 32x32 icon image.
+</p>
+
+<h2>Tool Icons</h2>
+<p>
+The icons starting with “tool_” and “func_” are used for the lower row
+in the boot menu,
+representing tools that ship with rEFIt and built-in functions.
+If you change those, make sure they have a 48x48 icon image.
 </p>
 
 
