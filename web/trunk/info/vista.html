@@ -1,0 +1,102 @@
+<?php
+$vc_author = '$Author$';
+$vc_date   = '$Date$';
+
+include "inc_doctype.php";
+?>
+<html>
+<head>
+<title>rEFIt - Windows Vista and EFI</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<?php include "inc_head.php"; ?>
+</head>
+<body>
+<?php include "inc_logo.php"; ?>
+<div id="content">
+
+<?php include "inc_trail.php"; ?>
+
+
+<h1>Windows Vista and EFI</h1>
+
+<p>
+Every now and then the question comes up why rEFIt doesn’t support
+booting Windows Vista through EFI.
+The short story is that neither Vista nor the Intel Mac firmware
+are up to it right now.
+Read on for the long story.
+</p>
+
+<h2>Microsoft’s Official Position</h2>
+
+<p>
+The official word from Microsoft is that the final release of Windows Vista
+will not support EFI at all.
+EFI booting support may be added in a future service pack for Windows Vista,
+but will be limited to UEFI 2.0 on 64-bit platforms.
+</p>
+<p>
+All IA64 (a.k.a. Itanium) versions of Windows support EFI as that is the
+standard firmware on that platform.
+But Apple doesn’t use IA64 CPUs and very likely never will,
+so that’s a moot point.
+</p>
+
+<h2>Microsoft’s Reality</h2>
+
+<p>
+An analysis of the publicly released Windows Vista RC1 DVD images
+yields the following results:
+</p>
+<ul>
+<li>The x86 (32-bit) version has no EFI binaries and no special El Torito
+boot entry.</li>
+<li>The x64 (64-bit) version has two EFI binaries on the ISO/UDF file system,
+but no special El Torito boot entry.</li>
+</ul>
+<p>
+Since no current EFI firmware is capable of reading ISO9660 or UDF file systems,
+this means that even the x64 disk is not directly bootable on any EFI firmware.
+</p>
+
+<h2>Apple’s Reality</h2>
+
+<p>
+The current firmware on Intel Macs is based on EFI 1.10,
+and runs in 32-bit mode even on the 64-bit-capable Core 2 based machines
+(Mac Pro, late-2006 iMac).
+</p>
+<p>
+This means the current Mac firmware is not capable of running the
+EFI binaries on the Windows Vista x64 disk,
+because those are compiled for a 64-bit EFI environment.
+(You just get an “Unsupported” error from EFI if you try anyway.)
+It will require a major firmware upgrade from Apple for this to change.
+And even then only the recent 64-bit Mac models would be able
+to boot Vista through EFI.
+</p>
+<p>
+On a side note, the current state of El Torito support in Apple’s firmware
+is still in doubt.
+There is a possibility that it no longer detects file systems in secondary
+El Torito entries at all,
+but the details remain to be tested.
+</p>
+
+<h2>The State of rEFIt</h2>
+
+<p>
+Current versions of rEFIt are already coded to recognize the file names
+of the EFI boot loaders on the Windows Vista DVDs,
+and show an appropriate logo for them.
+However, the contents of the DVD are not accessible from within the EFI
+environment, so all that will show up is the BIOS-based boot code in the
+first El Torito entry.
+</p>
+
+
+<?php include "inc_footer.php"; ?>
+</div>
+<?php include "inc_sidebar.php"; ?>
+</body>
+</html>
