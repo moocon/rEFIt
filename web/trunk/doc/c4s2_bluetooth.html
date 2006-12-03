@@ -1,0 +1,43 @@
+<?php
+$vc_author = '$Author$';
+$vc_date   = '$Date$';
+
+include "inc_doctype.php";
+?>
+<html>
+<head>
+<title>rEFIt - Documentation - Bluetooth Keyboard Problems</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<?php include "inc_head.php"; ?>
+</head>
+<body>
+<?php include "inc_logo.php"; ?>
+<div id="content">
+
+<?php include "inc_trail.php"; ?>
+
+
+<h1>Bluetooth Keyboard Problems</h1>
+
+<p>
+Problem: An Apple Wireless Keyboard or another Bluetooth keyboard
+works in Mac OS X, but not in rEFIt, LILO, Windows, Linux, whatever.
+</p>
+
+<p>
+Solution: As mentioned in the
+<a href="http://docs.info.apple.com/article.html?artnum=303572">Boot Camp
+Requirements</a>, Apple does not support the use of Bluetooth keyboards
+and mice with Boot Camp.
+They will actually to some degree, but they will not work <b>realiably</b>.
+There is nothing rEFIt could do about this.
+If you have problems with your wireless keyboard,
+use a USB or built-in keyboard instead.
+</p>
+
+
+<?php include "inc_footer.php"; ?>
+</div>
+<?php include "inc_sidebar.php"; ?>
+</body>
+</html>
