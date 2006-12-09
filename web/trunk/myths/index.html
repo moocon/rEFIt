@@ -1,0 +1,288 @@
+<?php
+$vc_author = '$Author$';
+$vc_date   = '$Date$';
+
+include "inc_doctype.php";
+?>
+<html>
+<head>
+<title>rEFIt - Myths and Facts About Intel Macs</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<?php include "inc_head.php"; ?>
+</head>
+<body>
+<?php include "inc_logo.php"; ?>
+<div id="content">
+
+<?php include "inc_trail.php"; ?>
+
+
+<h1>Myths and Facts About Intel Macs</h1>
+
+<p>
+There are quite a few myths out there about what you can or can’t do with
+Intel Macs.
+Here you’ll find them disproven or backed up.
+</p>
+<p>
+This is a work in progress. If you want something added, just let me know.
+</p>
+
+
+<h2>Myth: You need Boot Camp to run Windows/Linux/...</h2>
+<p>
+This section should probably be called “What is Boot Camp anyway?”.
+There is no final word on what is worthy of the label “Boot Camp” and
+what is not.
+Personally, I prefer to use more precise terms like “BIOS emulation”,
+“hybrid GPT/MBR”, “BIOS-based booting” or “legacy OS booting”.
+</p>
+<p>
+Here are some facts about Boot Camp to get a picture of what is involved
+in making it work.
+See the following sections on what is actually needed/recommended for
+booting Windows or Linux.
+</p>
+<p>
+When Apple released the first Boot Camp Beta in April 2006,
+they actually released three separate pieces that were all required
+to make it work:
+</p>
+<ol>
+<li>
+The Mac OS X 10.4.6 Update added several capabilities to the OS and its tools:
+<ul>
+<li>Online resizing of HFS+ volumes (kernel and <tt>diskutil</tt>)</li>
+<li>Hybrid GPT/MBR partition table support (<tt>diskutil</tt>
+and Disk Utility)</li>
+<li>Ability to select Windows partitions and CDs as boot volumes
+(Startup Disk and <tt>bless</tt>)</li>
+</ul>
+</li>
+<li>
+Firmware updates for the iMac, Mac mini and MacBook Pro added
+a BIOS compatibility module, including detection of BIOS-bootable disks
+and CDs in the built-in boot volume chooser.
+This has been part of Intel Mac firmwares ever since.
+</li>
+<li>
+The actual “Boot Camp” download containing the “Boot Camp Assistant”.
+The Boot Camp Assistant has exactly two functions.
+It provides a nice user interface to resize the Mac OS X partition
+and create/remove a Windows partition,
+and it contains a CD image with Windows XP drivers for Intel Mac hardware
+(including a Startup Disk control panel for Windows).
+</li>
+</ol>
+<p>
+Summary: You don’t <i>need</i> the actual Boot Camp package
+to install Windows or Linux, but it usually helps.
+</p>
+
+
+<h2>Myth: You need BIOS compatibility to boot Linux</h2>
+<p>
+While it is very common (and recommended) to boot Linux using
+BIOS compatibility mode and LILO/GRUB,
+there are other ways to boot Linux on an Intel Mac.
+</p>
+<p>
+Even before Boot Camp was released,
+<a href="http://elilo.sourceforge.net/">elilo</a> (the EFI Linux Loader)
+was used to boot Linux on Intel Macs.
+However, this requires a specially prepared kernel and has some drawbacks
+(like not having 2D/3D accellerated graphics, see below).
+</p>
+
+
+<h2>Fact: You need a MBR partition table to use LILO/GRUB</h2>
+<p>
+LILO and GRUB are BIOS-based boot loaders for Linux.
+As such, they rely on BIOS functions and the MBR partition table
+to locate partitions and load the Linux kernel.
+</p>
+<p>
+The usual way to enable this is to create a hybrid GPT/MBR partitioning.
+The Boot Camp Assistant and <tt>diskutil</tt> do this automatically.
+If you’re using GNU parted, use <tt>gptsync</tt> afterwards
+(included in rEFIt, select “Partitioning Tool” in the boot menu).
+</p>
+
+
+<h2>Fact: You need BIOS compatibility for 2D/3D accelleration</h2>
+<p>
+If you want good graphics support in Linux, you must boot it using
+BIOS compatibility mode.
+This also means using LILO or GRUB, and having a MBR partition table
+(either hybrid GPT/MBR or plain MBR).
+</p>
+<p>
+The X.org / XFree86 drivers for Intel and ATI hardware require
+a Video BIOS to initialize the card.
+The Linux text console also relies on the Video BIOS.
+Apple’s firmware only provides a Video BIOS when booting in
+BIOS compatibility mode.
+Without it, you only get unaccellerated frame buffer graphics.
+</p>
+<p>
+Side note: James McKenzie published a
+<a href="http://www.madingley.org/macmini/">hack to elilo</a>
+that activates the Video BIOS without activating the full
+BIOS compatibility mode.
+This actually allows the accelerated drivers to work without booting
+through LILO/GRUB.
+Unfortunately it only works on the Mac mini and hasn’t been updated
+in months.
+</p>
+
+
+<h2>Fact: You need BIOS compatibility and a MBR partition table
+to boot Windows</h2>
+<p>
+Both Windows XP and Windows Vista rely on the good old BIOS to boot
+on 32-bit platforms.
+They also require a MBR partition table to boot (hybrid GPT/MBR is fine
+as usual).
+</p>
+<p>
+Microsoft has announced that they plan to support native UEFI 2.0 booting
+in a future service pack for the 64-bit version of Windows Vista.
+Presently, that excludes <i>all</i> Intel Macs because Apple’s firmware
+is based on EFI 1.10, not UEFI 2.0.
+Core Solo and Core Duo models are 32-bit only, and have no chance of
+using this, ever.
+Core 2 based models could work in the future if Apple releases UEFI-compatible
+firmware updates for them.
+</p>
+
+
+<h2>Myth: Mac OS X requires GPT</h2>
+<p>
+This is mostly a myth.
+Mac OS X boots and runs just fine from disks using MBR partitioning,
+or even APM (Apple Partition Map, used on PowerPC Macs).
+</p>
+<p>
+However, the Mac OS X <b>Installer</b> will refuse to put a fresh copy
+of Mac OS X on a disk that’s not using GPT.
+You can work around this using cloning tools like
+<a href="http://www.shirt-pocket.com/SuperDuper/">SuperDuper!</a> or
+<a href="http://www.bombich.com/software/ccc.html">Carbon Copy Cloner</a>.
+Install Mac OS X on a GPT-partitioned disk first,
+then clone it onto the disk of your choice.
+</p>
+<p>
+Apple’s firmware updates are another issue.
+The exact requirements are not known at this time,
+but they are known to not work if you don’t have GPT
+<b>and</b> you don’t have a EFI System Partition.
+</p>
+
+
+<h2>Myth: Mac OS X requires a hidden EFI System Partition</h2>
+<p>
+Every GPT-formatted disk is supposed to have an EFI System Partition,
+and Apple’s tools create one at the beginning of the disk.
+However, Mac OS X doesn’t actually use it; the EFI System Partition is
+completely empty on a standard Intel Mac.
+Apple has added a HFS+ file system driver to its firmware,
+and the firmware boots Mac OS X directly from the partition it is installed on.
+</p>
+<p>
+Also see above; Mac OS X can boot from a MBR-only disk with no trace
+of an EFI System Partition.
+</p>
+<p>
+There is still some uncertainty about firmware updates, though.
+So far no one has investigated how they work in detail, and some people
+believe they require the EFI System Partition to be present.
+</p>
+
+
+<h2>Myth: EFI requires GPT</h2>
+<p>
+The GPT specification is part of the EFI specification.
+However, all parts and features of EFI are just as well-defined for
+MBR-partitioned disks.
+</p>
+
+
+<h2>Myth: GRUB overwrites GPT tables</h2>
+<p>
+This is only true when your partition tables are messed up already.
+GRUB diligently scans the MBR partition table to see if the sectors
+following the MBR actually are unoccupied
+before embedding its “stage1_5” there.
+Both pure GPT and hybrid GPT/MBR disks have an “EFI Protective” entry
+in the MBR table that prevents GRUB from overwriting the GPT tables.
+</p>
+<p>
+There are several circumstances that may have led to this myth:
+</p>
+<ul>
+<li>Unpatched versions of GRUB fail to start up because they try to
+access the A20 gate, which fails on Intel Macs because Apple got rid
+of that kind of legacy hardware. (Many Linux distros have the patch
+nowadays.)</li>
+<li>GRUB may install on a pure GPT disk, but will fail to work on boot
+since it needs the MBR partition table.</li>
+<li><a href="http://download.onmac.net/">XOM</a>
+fails to put the “EFI Protective” entry in the MBR,
+thereby allowing GRUB to overwrite the GPT tables.
+However, GPT-aware operating systems usually don’t even look for GPT tables
+when the MBR is missing the “EFI Protective” entry, so it doesn’t really
+matter if the GPT tables are intact or not in this case.</li>
+</ul>
+
+
+<h2>Myth: You need rEFIt’s reiserfs driver to boot Linux from a reiserfs
+partition with LILO/GRUB</h2>
+<p>
+LILO and GRUB will boot Linux from any file system without any help from rEFIt.
+(Provided the file system type is supported by them at all, of course.)
+</p>
+<p>
+Installing rEFIt’s file system drivers does make a cosmetic difference for the
+rEFIt boot menu, though.
+With the drivers, it will display the label given to the partition,
+and it will load a “.VolumeIcon.icns” file from the root directory if present.
+</p>
+
+
+<h2>Myth: You need rEFIt to install/boot Linux</h2>
+<p>
+You don’t.
+The firmware’s built-in boot volume chooser (hold Option to activate it)
+will recognize Linux boot CDs as well as bootable hard disks
+and let you boot them. (They may be labeled “Windows”, though.)
+For triple-booting you’ll get only one item in the built-in chooser,
+but you can use GRUB, LILO, or NTLDR to act as a second-level menu to choose
+between Windows and Linux.
+The <tt>gptsync</tt> tool can be compiled to run on Linux.
+</p>
+<p>
+Of course rEFIt makes it easier.
+For example, it will give you a single menu even for triple-boot setups.
+</p>
+
+
+<h2>Myth: You need rEFIt’s gptsync after using Boot Camp Assistant</h2>
+<p>
+The Boot Camp Assistant (and <tt>diskutil</tt>) already creates a hybrid
+GPT/MBR partition table.
+There is no need to clean up after them,
+and <tt>gptsync</tt> will just tell you nothing needs to be changed.
+</p>
+<p>
+You do need <tt>gptsync</tt> (a.k.a. the “Partitioning Tool” entry in
+the rEFIt menu) after using a partitioning tool that doesn’t know about
+the hybrid format, e.g. GNU parted or
+old versions of Disk Utility from a pre-10.4.6 Mac OS X boot CD.
+</p>
+
+
+<?php include "inc_footer.php"; ?>
+</div>
+<?php include "inc_sidebar.php"; ?>
+</body>
+</html>

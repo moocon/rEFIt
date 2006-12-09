@@ -16,6 +16,7 @@
 <li><a href="/history.html">Version History</a></li>
 <li><a href="/goals.html">Goals and Ideas</a></li>
 <li><a href="/screen.html">Screenshot</a></li>
+<li><a href="/myths/">Myths and Facts</a></li>
 <li><a href="/info/">Information Repository</a></li>
 </ul>
 
