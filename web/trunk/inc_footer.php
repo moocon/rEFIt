@@ -38,6 +38,6 @@ if ($vc_author) {
 }
 
 ?>
-<p id="copyright">Copyright &copy; 2006 Christoph Pfisterer</p>
+<p id="copyright">Copyright &copy; 2006-2007 Christoph Pfisterer</p>
 <div id="footerclear"></div>
 </div>
