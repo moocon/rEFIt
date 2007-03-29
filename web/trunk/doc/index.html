@@ -21,7 +21,8 @@ include "inc_doctype.php";
 
 <p>
 Welcome to the online documentation for rEFIt.
-The documentation is organized by tasks:
+The documentation is organized by tasks.
+There is a <a href="trouble.html">troubleshooting section</a> at the end.
 </p>
 
 <h2>Setup</h2>
@@ -61,12 +62,7 @@ configuration file.</dd>
 </dl>
 
 <h2>Troubleshooting</h2>
-<dl>
-<dt><a href="c4s1_notfound.html">Legacy Booting: Not Found Error</a></dt>
-<dd>Read this if you get "Not Found" errors when booting Windows.</dd>
-<dt><a href="c4s2_bluetooth.html">Bluetooth Keyboard Problems</a></dt>
-<dd>My Apple Wireless Keyboard doesn't work in rEFIt/LILO/Windows. Why?</dd>
-</dl>
+<?php include "inc_trouble.php"; ?>
 
 
 <?php include "inc_footer.php"; ?>

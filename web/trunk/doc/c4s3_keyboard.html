@@ -1,0 +1,43 @@
+<?php
+$vc_author = '$Author$';
+$vc_date   = '$Date$';
+
+include "inc_doctype.php";
+?>
+<html>
+<head>
+<title>rEFIt - Documentation - General Keyboard Problems</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<?php include "inc_head.php"; ?>
+</head>
+<body>
+<?php include "inc_logo.php"; ?>
+<div id="content">
+
+<?php include "inc_trail.php"; ?>
+
+
+<h1>General Keyboard Problems</h1>
+
+<p>
+Problem: The keyboard doesn’t work at the LILO prompt or after booting
+from a Windows installation disk.
+</p>
+
+<p>
+Solution: This is a bug in Apple’s firmware.
+There is nothing rEFIt could do about this.
+</p>
+<p>
+So far the only reports are from MacBook Pro Core 2 Duo models,
+but other Core 2 Duo models may be affected as well.
+Usually the keyboard works on some boots, but not every time.
+So the workaround is to reboot and try again.
+</p>
+
+
+<?php include "inc_footer.php"; ?>
+</div>
+<?php include "inc_sidebar.php"; ?>
+</body>
+</html>

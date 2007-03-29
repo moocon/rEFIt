@@ -1,0 +1,56 @@
+<?php
+$vc_author = '$Author$';
+$vc_date   = '$Date$';
+
+include "inc_doctype.php";
+?>
+<html>
+<head>
+<title>rEFIt - Documentation - No rEFIt menu after power loss</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<?php include "inc_head.php"; ?>
+</head>
+<body>
+<?php include "inc_logo.php"; ?>
+<div id="content">
+
+<?php include "inc_trail.php"; ?>
+
+
+<h1>No rEFIt menu after Safe Sleep or power loss</h1>
+
+<p>
+Problem: When a Mac comes back up after a power loss, Safe Sleep, or
+Mac OS X kernel crash, there is no rEFIt menu.
+</p>
+
+<p>
+Solution: This is intentional, and protects you from data loss.
+</p>
+<p>
+When a Mac wakes from Safe Sleep, it actually goes through a regular
+boot process. Only after the Mac OS X kernel takes control, it notices that
+there’s a saved memory image on the hard disk, and loads it.
+It is a bug in the interaction between Mac OS X and the Mac firmware that
+users can interrupt this process and boot a different operating system.
+rEFIt tries its best to prevent this, because in this situation
+the file systems on the hard disk are in an inconsistent state,
+and using them from another operating system can result in corruption
+and data loss.
+</p>
+<p>
+This behaviour is made possible by the “rEFItBlesser” Startup Item that
+is installed by default when you use the installer package to install rEFIt.
+When Mac OS X starts up, rEFItBlesser sets the boot options to boot directly
+into Mac OS X. When Mac OS X shuts down <em>cleanly</em>, rEFItBlesser
+changes the setting back to point at the rEFIt menu.
+(This mechanism also lets you install rEFIt without having to run
+<tt>enable.sh</tt> manually.)
+</p>
+
+
+<?php include "inc_footer.php"; ?>
+</div>
+<?php include "inc_sidebar.php"; ?>
+</body>
+</html>

@@ -15,6 +15,10 @@ $docmap = array(
   array("c3s3_config.html", "The refit.conf Configuration File"),
   array("c4s1_notfound.html", "Legacy Booting: Not Found Error"),
   array("c4s2_bluetooth.html", "Bluetooth Keyboard Problems"),
+  array("c4s3_keyboard.html", "General Keyboard Problems"),
+  array("c4s4_safesleep.html", "No rEFIt menu after power loss"),
+  array("c4s5_parted.html", "Linux partition shows as EFI System"),
+  array("c4s6_linuxfat.html", "Linux partition shows as FAT32"),
 );
 
 ?>

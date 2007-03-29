@@ -1,0 +1,58 @@
+<?php
+$vc_author = '$Author$';
+$vc_date   = '$Date$';
+
+include "inc_doctype.php";
+?>
+<html>
+<head>
+<title>rEFIt - Documentation - Linux partition shows as EFI System</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<?php include "inc_head.php"; ?>
+</head>
+<body>
+<?php include "inc_logo.php"; ?>
+<div id="content">
+
+<?php include "inc_trail.php"; ?>
+
+
+<h1>Linux partition shows as EFI System (FAT)</h1>
+
+<p>
+Problem: I used rEFIt and its “Partitioning Tool” to install Linux,
+but now the Linux partition is marked as “EFI System Partition (FAT)”.
+</p>
+
+<p>
+Solution: Update to rEFIt 0.9 or newer, and re-run the “Partitioning Tool”
+in the rEFIt menu.
+</p>
+<p>
+This is caused by a bug in GNU parted.
+When you use parted to edit a GPT disk, and you mark a partition with the
+“boot”/“active” flag in parted, its GPT type is set to “EFI System Partition”,
+no matter what file system it contains.
+The “Partitioning Tool” in rEFIt 0.8 and older copied that type information
+into the MBR table without verifying it.
+Starting in version 0.9, there is a workaround in place that will detect
+this situation, detect the file system actually present in the partition,
+and assign an appropriate MBR partition type.
+</p>
+<p>
+Another solution is to re-run parted, remove the “boot”/“active” flag
+from the Linux partition (it is meaningless for GPT), and later re-run
+the “Partitioning Tool” in rEFIt.
+That will change the type in both partition tables.
+</p>
+<p>
+If you only care about the MBR partition type, you can use Linux fdisk
+to change that directly.
+</p>
+
+
+<?php include "inc_footer.php"; ?>
+</div>
+<?php include "inc_sidebar.php"; ?>
+</body>
+</html>

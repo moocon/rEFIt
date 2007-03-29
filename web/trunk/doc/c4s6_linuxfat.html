@@ -1,0 +1,49 @@
+<?php
+$vc_author = '$Author$';
+$vc_date   = '$Date$';
+
+include "inc_doctype.php";
+?>
+<html>
+<head>
+<title>rEFIt - Documentation - Linux partition shows as FAT32</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<?php include "inc_head.php"; ?>
+</head>
+<body>
+<?php include "inc_logo.php"; ?>
+<div id="content">
+
+<?php include "inc_trail.php"; ?>
+
+
+<h1>Linux partition shows as FAT32</h1>
+
+<p>
+Problem: I used rEFIt and its “Partitioning Tool” to install Linux,
+but now the Linux partition is marked as FAT32 in the MBR partition table.
+</p>
+
+<p>
+Solution: Re-run the “Partitioning Tool” in the rEFIt menu.
+</p>
+<p>
+This can happen when you run the “Partitioning Tool” before you actually
+install Linux on the Linux partition.
+In the GPT table, the same partition type is used for Windows FAT,
+Windows NTFS, and all kinds of Linux file systems.
+The rEFIt Partitioning Tool tries to detect which file system is actually
+present in the partition so that it can assign the proper MBR partition type.
+However, if there is no file system present in the partiton, it falls back
+to FAT32.
+</p>
+<p>
+Of course you can also fix this manually using Linux fdisk.
+</p>
+
+
+<?php include "inc_footer.php"; ?>
+</div>
+<?php include "inc_sidebar.php"; ?>
+</body>
+</html>
