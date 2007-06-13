@@ -1,0 +1,465 @@
+<?php
+$vc_author = '$Author$';
+$vc_date   = '$Date$';
+
+include "inc_doctype.php";
+?>
+<html>
+<head>
+<title>Triple Boot via Boot Camp</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<?php include "inc_head.php"; ?>
+</head>
+<body>
+<?php include "inc_logo.php"; ?>
+<div id="content">
+
+<?php include "inc_trail.php"; ?>
+
+
+<h1>Triple Boot via Boot Camp</h1>
+
+<p>
+<i>Guide maintained by Pietro Gagliardi,
+formerly posted at <a href="http://wiki.onmac.net/index.php/Triple_Boot_via_BootCamp">OnMac.net</a>.</i>
+<br>&nbsp;</p>
+
+<p>
+This procedure allows you to triple boot Mac OS X, Windows XP and Linux. It has been successfully used to setup a MacBook, but is untested on the iMac/mini.  Therefore if you try this you do so at your own risk.
+</p>
+
+<!-- ================================================================== -->
+<h2>Before you start</h2>
+
+<p>
+This procedure takes 3-4 hours (with broadband downloading), which is mostly Windows & Linux installation. Also note that if you want to undo this process without destroying and reformatting your JHFS+ partition, you'll need iPartition. This is not reversible (nondestructively) with Apple's tools.
+<p>
+Before you begin you will need the following:
+
+<h3>Software</h3>
+
+<ul>
+<li><b>Boot Camp</b>: <a href="http://www.apple.com/macosx/bootcamp">Apple Boot Camp</a></li>
+<li><b>rEFIt</b>: <a href="http://refit.sourceforge.net/#download">rEFIt version 0.6 or later</a> (Optional, allows you to have a single graphical boot menu.)</li>
+<li><b>firmware update</b>: <a href="http://www.apple.com/support/downloads">The Intel Mac firmware update</a> (early 2006 models only)</li>
+<li><b>OSX update</b>: <a href="http://www.apple.com/support/downloads/macosx1046comboforintel.html">OSX 10.4.6 combo update</a> or later</li>
+</ul>
+
+<p>
+Please note that this procedure can potentally <strong>Destroy</strong> all data on you machine's hard disk drive, so make a backup first.
+<p>
+If you don't know how to make a clean back up of your system, you can visit the <a href="http://wiki.onmac.net/index.php/How_To_Backup_your_Mac">How To Backup your Mac</a> page.
+<p>
+For detailed Ubuntu installation instructions, check out <a href="http://wiki.onmac.net/index.php/Triple_Boot_via_BootCamp_Ubuntu">Triple_Boot_via_BootCamp_Ubuntu</a>.
+
+<!-- ================================================================== -->
+<h2>Background</h2>
+
+<p>
+If you want to just get on with installing, skip this section and go on to <a href="#install">install</a>.  Otherwise keep reading.
+
+<h3>Issues in brief</h3>
+
+<p>
+Setting up a machine for triple-booting is largely just partitioning the hard drive and installing each OS. The issues that cause problems are:
+<ul>
+<li>Partitions</li>
+<li>Boot</li>
+<li>Drivers (<a href="http://en.wikipedia.org/wiki/Device_driver">device drivers</a> for your hardware)</li>
+</ul>
+
+<p>
+In turn:
+<ul>
+<li><b>Partitions</b>: Intel Macs use <a href="http://en.wikipedia.org/wiki/GUID_Partition_Table">GPT</a> (part of <a href="http://en.wikipedia.org/wiki/Extensible_Firmware_Interface">EFI</a>); Windows does not use EFI, and uses the older <a href="http://en.wikipedia.org/wiki/Master_Boot_Record">MBR</a> instead of GPT. This requires a GPT/MBR hybrid. Linux can use both, but the installation tools don't (currently) deal with this hybrid. There are also limits to the number of partitions (hence no room for a Linux swap partition); the Windows partition must come last; and Boot Camp can't deal with a triple-boot system (for future driver upgrades).
+<p>
+Note that 64-bit Windows Vista comes with EFI support.</li>
+<li><b>Boot</b>: Once the OSs are set up, you need to boot, and the native Mac OS X bootloader can't triple-boot. This is easiest with rEFIt.</li>
+<li><b>Drivers</b>: Mac OS X naturally comes with drivers; newer Linux distributions more-or-less do; Windows XP doesn't, hence the need for a drivers disk.</li>
+</ul>
+
+<p>
+So in summary:
+<ul>
+<li><b>Partitions</b>
+<ul><li>GPT/MBR hybrid confuses Linux</li>
+  <li>limited number of partitions</li>
+  <li>Windows must come last</li>
+  <li>Boot Camp can't deal with triple-boot</li>
+</ul>
+<li><b>Boot</b>
+<ul><li>rEFIt bootloader</li></ul>
+<li><b>Drivers</b>
+<ul><li>Boot Camp drivers disk for Windows</li></ul>
+</ul>
+
+<!-- ------------------------------------------------------------------ -->
+<h3>Disk Partitions and their Limitations</h3>
+
+<p>
+The primary problem with installing operating systems on a Mac is the partitioning system.  Intel Macs use the new GPT method to partition drives.  (<a href="http://en.wikipedia.org/wiki/GUID_Partition_Table">GPT</a> is part of the new Extensible Firmware Interface (EFI) standard proposed by Intel as a replacement for the outdated PC BIOS). This is supported by Mac OS X (obviously) and Linux.  However Windows can only be installed on a machine with a legacy (MBR) based partitioning system.  In order to overcome this, Boot Camp uses both systems, and herein lies the difficulty in triple booting.  Currently there is no partitioning software available apart from diskutil (included with Mac OS X 10.4.6) that can create dual GPT/MBR partition system drives.  Current GPT based partitioners (e.g. GNU parted) wipe the MBR portion, whereas current MBR partitioners (e.g. fdisk, Partion Magic) can't edit GPT.
+<p>
+There are certain things you can do with fdisk that won't hurt GPT when booted using BIOS Emulation/Compatibility mode, because of the <a href="http://en.wikipedia.org/wiki/GUID_Partition_Table">layout</a> of the MBR and GPT relative to each other and the way the BIOS Emulation protects certain parts of the GPT/MBR tables:
+<ul>
+<li>Changing the partition type [t] of your linux or windows partition using fdisk will change the flag. Of course it won't format the partition for you, you'll have to do that yourself. The GPT will be completely unchanged.
+<li>Setting the bootable/active [a] flag of partitions is also safe to do. Again, the GPT is completely unaffected.
+</ul>
+<p>
+However, any changes to the actual MBR partition table structure are impossible without ruining your GPT structure.
+
+<p>
+In other words we have to manually partition the drive using diskutil in order to get the necessary partition structure for triple booting.  However it gets worse.  MBR only supports 4 primary partitions and GPT does not support extended partitions.  Combining these two limitations means that a dual partition system disk can have a maximum of 4 primary partitions.  In addition, Apple reserves the first primary partition for the "EFI System Partition".  That leaves us with only three partitions to play with, one for each OS.  Hence, we cannot have a Linux swap partition, instead we must create a swapfile.  Also, for some reason Boot Camp expects the Windows "C:" drive to be the last partition present on the drive.  If it isn't, Windows setup will crash with a "cannot find hall.dll" error after the first reboot.   
+<p>
+In addition, it may be best to stick with Apple's advice and format the Windows partition as FAT32. Due to limitations in Windows XP's disk manager, the FAT32 partition will normally be limited to a maximum of 32GB. However that said, some of these limitations can be overcome using the advanced partitioning methods listed in the next section.
+<p>
+Also, Intel based macs shipping with 10.4.7 or later pre-installed appear to be capable of partitioning a drive using MBR in a traditional manner and booting Mac OS X from it.  This may dramatically reduce the complexity of triple booting setup (at least for newer hardware) but information in this area is currently very scarce, and is not referred to again.
+(Note that writing to boot sectors is usually separate from writing to the master boot record, and can be done at any time)
+<p>
+Trick to make a swap partition nevertheless : (added by Muchel Roche on 13/11/06)
+Start partitioning as depicted above, install Windows, and then launch Linux install. Now we have as partitions : 
+<ul>
+<li>/dev/sda1 -> EFI
+<li>/dev/sda2 -> Mac OS X
+<li>/dev/sda3 -> intended for Linux
+<li>/dev/sda4 -> Windows
+</ul>
+<p>
+At the point of using the partitioning tool during the install, gparted (at least, but I guess most of the EFI aware partitioning programs that may be used by the different distros) is capable to shrink your windows (FAT32) partition in order to create a 5th partition in the end, which you can easily make 1 or 2 Gb wide, to hold your swap partition.
+It's not a problem in Linux to have five EFI partitions since it's "EFI aware", so it can use the swap. It doesn't bother Windows XP once installed because the bootloader (I use rEFIt) still knows where it is. All I had to do was to update the BIOS-alike partition scheme which rEFIt produces as partition scheme for Windows to run. And it seems not to be a problem for Windows which has no access to it and doesn't know it !
+The only drawback of this technique is that in he eventuality that you'd have to reinstall windows (but no one can see why ;-) it may cause a problem because the Windows partition isn't the last in that case which may cause a problem between Boot Camp insisting for windows to be the last and windows only knowing four partitions. I haven't tested yet this configuration and cannot figure what exactly could go on.
+Anyway, the fix wouldn't be that annoying : simply boot under a Linux live CD, fire up gparted and kill the swap to free space so that your drive goes back to the four partitions scheme. Re-install windows, reboot on live-CD and recreate the swap partition. Hopefully linux should boot again with no trouble.
+<p>
+Another simple fix is to use lvm to separate the big linux partition into as many partitions as you need. This will be backward compatible with MBR and EFI/GPT. See debian etch install below
+
+<!-- ------------------------------------------------------------------ -->
+<h3>Advanced Methods for Partitions/Filesystems</h3>
+
+<p>
+If you want to use FAT32, but you need your partition to be larger than 32GB, you can use a utility called <a href="http://www.ridgecrop.demon.co.uk/index.htm?fat32format.htm">fat32format</a> via a ''non-dos'' bootdisk or bootcd (think <a href="http://www.nu2.nu/pebuilder/">BartPE</a>) to perform the actual formatting. Windows will recognize and interact with the drive with no problems.
+<p>
+With respect to filesystems, Mac OS X can recognize and mount both NTFS and FAT32. However it will not recognize them properly unless the the GPT partition type is set to "Microsoft Basic Data". The only way you can set the partition to this type is to format the disk via diskutil and specify "MS-DOS FAT32" as the filesystem type. Confusingly, this will allow Mac OS X to correctly recognize either a FAT32-formatted partition or an NTFS-formatted partition. There is no way to format a partition as Linux, etc., and then convert it to "Microsoft Basic Data" (short, perhaps, of manually editing the drive itself with a hex editor). GNU parted does not support this partition type, "ntfs" and "fat32" in parted will not be recognized by the Mac. Furthermore, parted clobbers the MBR record. This cannot be properly restored by rEFIt, even with the filesystem sync utility. Basically you have to get it exactly right the first time.
+<p>
+Once you have one or more partitions in "Microsoft Basic Data" type set up, you can then proceed with the install below. However if you are trying to create a setup like below you will have some trouble:
+<ul>
+<li>GPT bootloader partition
+<li>Mac OS X partition
+<li>FAT32 data partition (for access from both OS's)
+<li>NTFS Windows boot partition (for increased speed and reliability)
+</ul>
+
+<p>
+The problem with this is that Windows installer will recognize the 2nd partition as "Active" and make it your C drive. This is bad because OS X expects the Windows boot partition to be the last on the disk. You can switch the active partition via a regular MBR fdisk utility such as Free FDisk, which is included on various boot CDs such as the very useful EBCD. GPT doesn't know anything about the active partition, and doesn't need to. Once this is switched then Windows will swap the drive letters and the 4th partition will be "C".
+<p>
+Finally, there is as small hint about NTFS write support in terminal under "man mount_ntfs". It says that it is very experimental and does not support a number of important NTFS features. For information read in <a href="http://forum.osx86project.org/index.php?showtopic=2328&st=0&p=16170&#entry16170">this forum</a>. Mac OS X itself has unfortunately not been proven to have a working write support for NTFS yet. Though, you can use <a href="http://shadowofged.blogspot.com/2007/03/ntfs-3g-for-mac-os-x.html">NTFS-3G for Mac OS X</a> for that.
+
+<!-- ------------------------------------------------------------------ -->
+<h3>Booting your Mac</h3>
+
+<p>
+This article lists two alternative methods for booting the operating systems installed on your Mac.  The recommended method is to use the graphical boot menu supplied by the rEFIt project.  The advantage of this method is that it presents you with a single, customizable interface.  However the disadvantages are that you need to bless it onto your hardware, and it needs to be reinstalled every time you upgrade Mac OS X.  
+<p>
+As some people may be uncomfortable with blessing their equipment, an alternative method exists were you can chainload the LILO bootloader from the Windows XP (NTLDR) bootloader.  The problem with this method is that LILO must be reinstalled every time you change your Linux kernel, and it requires you to use multiple boot menus in order to select your OS.
+<p>
+With respect to booting Linux, unfortunately it is not possible to use GRUB out-of-the-box with Boot Camp. GRUB tries to access legacy hardware that is not present in the Intel Macs. See <a href="http://www.scl.ameslab.gov/Projects/mini-xen/index.html">here</a> for a patch to GRUB to make it work in the Intel Macs.
+<blockquote>
+Note: This section previously stated: "GRUB tries to install the stage 1.5 code into the section of the disk reserved for the primary GPT record. Apple's firmware prevents this from occurring." This is wrong. GRUB checks the MBR partition table itself, detects that there is no room to embed a stage1.5 and falls back to coding the sector location of stage2 into stage1.
+</blockquote>
+
+<!-- ================================================================== -->
+<h2><a name="install"></a>Installing the Operating Systems</h2>
+
+<h3>OS X</h3>
+
+<ul>
+<li><b>Install Mac OS X</b>: Install Mac OS X as normal onto your hard disk drive with a single partition. (If it's already installed, you can skip this step.) In order to save time, only install the base system at this point. Boot into Mac OS X.
+<li><b>Mac OS X update</b>: Install the Mac OS X 10.4.6 combo update (if necessary)
+<li><b>firmware update</b>: Install the firmware update for your mac (if necessary).
+<li><b>Boot Camp</b>: install Boot Camp.
+<li><b>rEFIt</b>: you can install <a href="#refit">rEFIt</a> at this point, and it'll make life <i>much</i> easier (as you will always get the choice of which OS to start in, for instance)
+</ul>
+
+<h3>Boot Camp & partitioning</h3>
+
+<ul>
+<li>Run the Boot Camp Assistant and create the Windows XP driver cd. Then exit Boot Camp. <b>DO NOT PARTITION USING BOOT CAMP</b>: you are only using Boot Camp for the drivers, not the partitioning. If you already partitioned, it created a 3rd partition at end of the drive. You can remove it if you boot from another drive and run this command: <tt>sudo gpt remove -i 3 /dev/disk0</tt>. A simpler way to remove the partition is to use Boot Camp Assistant, which allows to "restore the startup disk to a single volume" (see its manual).
+<p>
+Alternatively, you can burn the disk to a CD (or DVD) without running the Boot Camp Assistant. (This is also necessary if you wish to update the drivers after setting up triple-booting.) To do so, Right/Control Click on the Boot Camp Assistant and select 'Show Package Contents'.  Then copy the Contents/Resources/diskimage.dmg file to the Desktop and use Disk Utility to burn that image to a CD.
+
+<li>Open up a terminal window and type diskutil list. It should look something like this:
+<pre>/dev/disk0
+#:                   type name               size      identifier
+0:  GUID_partition_scheme                    *233.8 GB disk0
+1:                    EFI                    200.0 MB  disk0s1
+2:              Apple_HFS Macintosh HD       233.4 GB  disk0s2</pre>
+<li>Find the identifier of your Mac OS X partition (in this case disk0s2) and type the following in order to repartition the drive.  In the example below, I have repartitioned a 100GB hard disk to contain 60GB Mac OS X, 17GB Linux and 15GB Windows XP partitions. You can change the volume names/sizes but not the order. The command syntax is...
+<pre>sudo diskutil resizeVolume [disk identifier] [disk size] \
+  [partition type] ["Partition label"] [partition size] \
+  [partition type] ["Partition label"] [partition size]</pre>
+so, you'll enter something like...
+<pre>sudo diskutil resizeVolume disk0s2 60G "Linux" "Linux" 17G "MS-DOS FAT32" "Windows" 15G</pre>
+
+<li>If you get the error message "Resizing encountered error: the chosen size is invalid for the chosen file system..." it usually means the total size of the three partitions is larger than the original size of the first partition. If you look at the above output of <b>diskutil list</b> you'll see that <b>Apple_HFS Macintosh HD</b> reports a size of <b>233.4 GB</b> (the symbol is <b>disk0s2</b>). This means that the new partition sizes (60G + 17G + 15G in the example) should add up to no more than <b>233.4 GB</b>. Since 60G + 17G + 15G = 92G this is safe. <i>Of course, those numbers were provided from an example using a 100 GiB hard drive while the</i> diskutil list <i>numbers were taken from a 250 GiB drive</i>.
+
+<li>If diskutil resizeVolume still reports "chosen size is invalid..." errors, an alternative solution is to try to use MB instead of GB as following;
+<pre>sudo diskutil resizeVolume disk0s2 60000M "Linux" &lt;name of linux volume&gt; 17000M \
+  "MS-DOS FAT32" &lt;name of windows volume&gt; 15000M</pre>
+
+<li>In some case, the diskutil resizeVolume reports <b>"Resizing encountered error No space left on device (28) on disk"</b> even you've used <b>"diskutil list"</b> command to confirm that disk space has enough apace. Do this work around will fix the errors;
+
+<ol><li>Resize the current partion size first;
+<pre>sudo diskutil resizeVolume disk0s2 60G</pre>
+Reboot it.
+<li>Create the rest of partions;
+<pre>sudo diskutil resizeVolume disk0s2 60G "Linux" "Linux" 17G "MS-DOS FAT32" "Windows" 15G</pre>
+</ol>
+
+<li>Once you have completed the resizing, it will ask you to reboot. Reboot Mac OS X as you would normally do. When it starts up, run <b>diskutil list</b> again and verify that your new partitions have been created!
+</ul>
+
+<!-- ------------------------------------------------------------------ -->
+<h3>Windows XP</h3>
+
+<ul>
+<li>Insert your Windows XP CD and restart. When you hear the chime, hold down the C key (to boot from CD).
+<li>Windows Setup will start. At the disk partition screen, select the C: drive. "Quick partition" it as FAT32. Setup will continue and eventually it will restart your computer. (see [[Talk:Triple_Boot_via_BootCamp]] for a workaround if the Windows installer does not offer to reformat your windows partition at install time - the Windows installer should format it here or it may not be bootable)
+<li>After the first restart, hold down the OPTION/ALT key and select the Windows HDD from the bootloader in order to continue setting up XP.  You will need to repeat this until Windows is fully installed. It will <b>not</b> work yet (notably, the network won't) -- you need to install drivers.
+<li><b>Driver CD</b>: Finish the Windows XP installation by using the driver cd you created earlier to install the system drivers; you will need to click through (hit "Continue Anyway") to many messages of the form:
+"The software you are installing has not passed Windows Logo testing...", but otherwise don't need to do anything.
+<li><b>Activate windows</b>: Now that your network card works, activate Windows (so that it doesn't stop working)
+</ul>
+
+<p>
+I think as of Boot Camp 1.1.2, the following is taken care of by the drivers CD. If not you will likely want to add some of the following utilities to make Windows more usable with your Mac hardware, notably:
+<ul>
+<li><a href="http://www.geocities.com/pronto4u/applemouse.html">Apple Mouse</a> so that you can right-click with 'Control' (put in your startup folder)
+<li><a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=9d467a69-57ff-4ae7-96ee-b18c4790cffd&displaylang=en">Microsoft Keyboard Remapping</a> if you want Delete, Page Up/Page Down, and other changes.
+<li>A virus scanner (else Windows complains)
+</ul>
+
+<p>
+You now have a dual boot system! But obviously, we aren't finished yet.
+
+<!-- ------------------------------------------------------------------ -->
+<h3>Linux</h3>
+
+<ul>
+<li>From here, you need to bootstrap your favorite Linux distro.  Depending on the variant, this may also require you to compile your own kernel.
+<li>The easiest way to compile your own kernel is to download a <a href="http://www.kernel.org/">vanilla linux kernel</a> and use the kernel config file from <a href="http://svn.sourceforge.net/viewcvs.cgi/mactel-linux/trunk/misc/misc/">mactel-linux.com</a> BUT NOT THE KERNEL PATCH. The kernel patch is necessary only for elilo whereas we will be using lilo.
+<li>We now need to set up the Lilo bootloader so that we can boot into Linux.  Install Lilo in the manner that is normal for your distro of choice.
+<li>Create the /etc/lilo.conf file as follows:
+<pre># Global LILO settings
+boot=/dev/sda3
+timeout=5
+default=Linux
+
+# Kernel specific LILO settings
+image=/boot/&lt;kernel image file&gt;
+label=Linux
+read-only
+root=/dev/sda3</pre>
+
+<li>Next Install Lilo onto the partition record of your Linux partition:
+<pre>/sbin/lilo</pre>
+</ul>
+
+<!-- ------------------------------------------------------------------ -->
+<h4>Via Debian etch</h4>
+<p>
+Further advice is at:
+<a href="http://www.sharealike.org/index.php?m=200605">Brian W. Carver's HOW-TO</a>, but it is now out-of-date: notably, the network card is supported and X is set up correctly.
+<p>
+Lots of Debian-specific information is at: <a href="http://wiki.debian.org/MacBook">Debian Wiki on MacBook</a>
+
+<ul>
+<li><b>Install rEFIt</b>: I installed rEFIt first; this not only makes it easier to choose OS on boot, but it allows you to use <b>gptsync</b> to deal with GPT/MBR discrepancies.
+<li><b>Burn CD</b>: Download the net installer (I used <a href="http://www.debian.org/devel/debian-installer/">Debian etch RC1 net install</a>) and burn
+<li><b>Boot from CD</b>: insert the CD, reboot, and choose the CD from the rEFIt menu
+<li>? I was unable to use the built-in keyboard to start the boot process! When I inserted a USB keyboard, I was able to proceed, and I could use the built-in keyboard later in the process
+<li><b>Expert install</b>: type <b>expert</b> at the install prompt (do not just hit ENTER!), as we will want to partition and set up booting manually
+<li>Most of the installation process is as usual (click-through); we flag differences below.
+<li><b>Partition</b>: format the <i>third</i> (empty) partition; you can use whichever file system you want except xfs which is incompatible with lilo; set mount point / & flag it bootable. You will get a warning that you are not setting a swap partition. Say "OK" and move on: we don't have enough partitions for a swap, and we will instead make a swap file later. <i>This step messes up the partition table,</i> so you will need to fix it later (with gptsync), and work around it with LILO below.
+
+<blockquote>Alternatively, you can set up a lvm logical volume from the linux partition, and then define as many partitions as you need in the lvm system. Lilo is able to boot a system that has all the partitions under lvm !</blockquote>
+
+<li><b>Boot</b>: GRUB does not support the GPT/MBR hybrid setup  (as of this writing), so we instead use LILO: we install LILO on the Linux partition, and use rEFIt as the boot manager (which then loads LILO).
+<li>!!! We cannot just install LILO, as the partitioning (<tt>gparted</tt>?) trashed the MBR. <i>Apparently</i>, you can fix this by running <tt>gptsync</tt> before installing LILO, via dropping to a command prompt and typing:
+<pre>chroot /target apt-get install refit
+/target/sbin/gptsync /dev/sda</pre>
+(This is from <a href="http://wiki.debian.org/MacBook">Debian Wiki on MacBook</a>.) Presuming that this works, in the next step, LILO will <i>succeed</i>, and you won't need to do it manually.
+
+<li><b>LILO</b>: Install LILO to the <i>partition</i>, <b>not</b> to the <i>MBR</i>!!! It will fail; this is ok. Drop to a shell (using the option at the bottom of the installer), and edit lilo.conf via
+<pre>nano /target/etc/lilo.conf</pre>
+Comment out the reference to Windows XP at the end (rEFIt is dealing with booting, not LILO), then setup LILO via:
+<pre>chroot /target
+/sbin/lilo -v -P ignore</pre>
+<tt>-v</tt> makes it verbose, and, crucially, <tt>-P ignore</tt> tells LILO to ignore the confusing, out-of-sync hybrid GPT/MBR (it may be possible to instead use gptsync, but that involves a reboot). This should succeed; now exit the shell, and choose "Continue without a boot loader", as the Debian installer doesn't know that you manually setup LILO.
+<li><b>Done!</b> (or are you?): you can now finish the install and reboot: Debian is set up
+<li><b>gptsync</b>: In rEFIt, do not boot: go to the EFI shell, and type <tt>gptsync</tt>: this will tell you that the partition table is out of sync, and will offer to sync it for you. Say "yes", naturally. Now reboot and all systems should be go!
+<li><b>swap</b>: as there is no swap partition, create a 1GB swapfile via:
+<pre>dd if=/dev/zero of=/swap bs=1024 count=1048576
+mkswap /swap
+swapon /swap
+chmod 600 /swap</pre>
+</ul>
+
+<p>
+Now you are <i>actually</i> done with installing; there is some hardware configuration (below).
+
+<!-- ------------------------------------------------------------------ -->
+<h4>Hardware: What works, what doesn't?</h4>
+
+<p>
+See <a href="http://wiki.debian.org/MacBook">Debian Wiki on MacBook</a> for up-to-date info on hardware especially.
+
+<ul>
+<li><b>Monitor</b>: Install <tt>915resolution</tt>; on Debian,
+<pre>apt-get install 915resolution</pre>
+...and it works automatically (restart X, or perhaps reboot).
+Without this, you get 1024x768 resolution, which is very fuzzy.
+(This loads the <tt>1280x800</tt> video mode onto your Intel 915 video card, so that it works properly.) Note that your xorg.conf will list 1280x800 (presuming you selecting this during install), but without <tt>915resolution</tt>, it won't work.
+<p>
+(I imagine this should only be necessary on the Mac Mini, MacBook, and the low-end iMac; Mac Pros, MacBook Pros, and the higher-end iMacs don't use Intel graphics.)
+</ul>
+<p>
+Currently, your network card and X are setup correctly, and monitor does with <tt>915resolution</tt>; sound works as of Linux kernel 2.6.18-rc1.
+<p>
+I do not know about other accessories (iSight camera), and I don't know an easy way to setup the keyboard.
+
+<!-- ------------------------------------------------------------------ -->
+<h3>Boot</h3>
+
+<ul>
+<li>From here you can either setup the mac to boot via rEFIt (recommended) or via NTLDR
+</ul>
+
+<h4><a name="refit"></a>Booting your Mac via rEFIt</h4>
+
+<ul>
+<li>Restart your computer into Mac OS X
+<li>Mount the rEFIt disk image, and copy the <tt>efi</tt> folder contained within to the root directory of your Mac OS X partition.  
+<li>Open a terminal window and install rEFIt via:
+<pre>cd /efi/refit
+./enable.sh</pre>
+<li>(optional) Open the <tt>/efi/refit/refit.conf</tt> in textedit to customise the boot menu to your requirements.
+</ul>
+
+<p>
+Now restart your mac.  If everything has been done correctly, the rEFIt menu will be displayed with icons for all three operating systems.  Select the OS of your choice using the arrow keys and return.
+<p>
+<b>gptsync</b>: if the GPT &amp; MBR get out of sync (as they may when installing Linux), use <tt>gptsync</tt> to fix this: at the rEFIt screen, choose the command prompt, let it boot, then type <tt>gptsync</tt> at the prompt, and it will check if GPT &amp; MBR are in sync, and offer to fix them if they are not.
+
+<h4>Booting your Mac via NTLDR</h4>
+
+<p>
+<i>You do not need to do this if you have installed rEFIt;</i> this uses the Mac native loader (to select between Mac &amp; Windows), plus the Windows NT <tt>NTLDR</tt> (to select between Windows &amp; Linux), instead of rEFIt (which selects between all 3, via a nice GUI).
+
+<ul>
+<li>You now need to mount your Windows partition, create a chainload file for ntldr and then add a reference to it in the Windows boot.ini file:
+<pre>mkdir /mnt/windows &amp;&amp; mount -t vfat /dev/sda4 /mnt/windows
+cd /mnt/windows
+dd if=/dev/sda3 of=linux.mbr bs=512 count=1
+echo 'C:\linux.mbr="XYZ Linux"' &gt;&gt; /mnt/windows/boot.ini
+cd &amp;&amp; umount /mnt/windows</pre>
+</ul>
+
+<p>
+Now restart your Mac.  If everything has been done correctly, when you hold down the OPTION/ALT key, you will be given an option to boot to OSX and Windows.  Select Windows.  NTLDR will now show up and present you with the option to either boot into Windows or Linux.  Select Linux!
+
+<!-- ================================================================== -->
+<h2>Further issues</h2>
+
+<h3>Linux Drivers</h3>
+
+<ul>
+<li>Version 8.24.6 or later of ATI's notebook linux drivers support the X1600 card found the MacBook Pro.  They are available on <a href="http://www.ati.com/">ATI's website</a>.
+<li><a href="http://modular.math.washington.edu/macbook/triboot/">wstein</a> has a working <a href="http://modular.math.washington.edu/macbook/triboot/xorg.conf">xorg.conf</a> using Ati's drivers and lilo+bootcamp for triple boot. This xorg.conf file is written for a Macbook Pro, but has also been tested successfully on a 20" iMac. (Simply change all occurances of "1440x900" with "1680x1050")
+</ul>
+
+<!-- ------------------------------------------------------------------ -->
+<h3>Upgrading Boot Camp from 1.0 to 1.1</h3>
+
+<p>
+On the 16th August 2006, Apple released an updated version of Boot Camp which includes drivers for iSight, amongst other things.
+<p>
+(The point of this upgrade is just to install newer drivers, so you just need to create a new drivers disk; you don't need to do any repartitioning or reinstalling of OSes.)
+<p>
+However the Boot Camp Assistant will not run on triple boot setups due to the different disk layout.  In order to upgrade, you need to use the following workaround:
+
+<ul>
+<li>Download version 1.1 from Apple's website (the link is at top of this article).
+<li>Install as normal.
+<li>Locate the Boot Camp Assistant icon in utilities, right click (or ctrl-click for single button mice) on it and select "show package contents".
+<li>In the finder window that opens, double click on contents, then double click on resources.
+<li>Right or ctrl-click on the diskimage.img file and select "open with -> disk utility".
+<li>Insert a blank cd, and burn the diskimage.dmg file to create the updated windows driver cd.
+<li>Restart into windows, and insert the driver cd to update your drivers.
+</ul>
+
+<!-- ------------------------------------------------------------------ -->
+<h3>Restoring your Mac to its original state</h3>
+
+<p>
+The following instructions worked for me on Mac OS X 10.4.8 with BootCamp 1.1.2.
+<p>
+Basically, there are two operations that need to be done:
+<ol>
+<li>Remove the Linux and Windows partitions.
+<li>Resize the Mac partition to the full size of the disk.
+</ol>
+
+<p>
+Removing the partitions can be done with "gpt":
+<ol>
+<li>Read the "remove" and "show" sections of "man gpt".
+<li>Reboot using the Mac OS X install disk.
+<li>Run the disk utility and make sure all volumes on your harddisk are unmounted. I've had to repeat this step after each gpt command, which, for some reason, caused them to get mounted again.
+<li>Run the terminal. 
+<li>Use "diskutil list" to find the device identifier of your harddisk (usually, it's "/dev/disk0").
+<li>Use "gpt show" to find the indices of the volumes you want to remove (if you've completed the triple booting sequence successfully, it should be 3 and 4).
+<li>Use "gpt remove -i &lt;index&gt; &lt;device identifier&gt;" to remove the Linux and Windows volumes. Replace "&lt;device identifier&gt;" and "&lt;index&gt;" with the values you found in the previous steps. Obviously you will need to run this command once (with the corresponding index) for each volume you want to remove. Note: Volumes are mounted automatically whe you remove a partition. Dismount them again.
+<li>Close the terminal, run the disk utility, check that the only remaining volume is the one you wanted. Make sure it's mounted.
+<li>Close disk utility and quit the installer. In the "Startup disk" dialog, select Mac OS X on your harddisk.
+<li>After rebooting, you should be back in your regular Mac OS X, with the Linux and Windows volumes gone.
+</ol>
+
+<p>
+Resizing the Mac volume is surprisingly difficult. Although "diskutil resizeVolume" claims to be able to grow volumes as well as shrink them, in reality, it fails with a "Resizing encountered error No space left on device (28) on disk" error message. Luckily, Boot Camp Assistant has an option to restore your disk to its original single-volume state, and that option will make that volume span the entire disk. To convince it to do this, however, you first need to use it to split your Mac volume into a smaller volume and a Boot Camp (Windows) volume. The steps:
+
+<ol>
+<li>Run Boot Camp Assistant. Note, this will only work '''after''' you've removed the Linux and Windows volumes, as Boot Camp Assistant expects a single-volume disk.
+<li>Skip the "Burn a Macintosh Drivers CD" step and split your disk into two volumes as instructed by Boot Camp Assistant. The actual sizes of the volumes don't matter.
+<li>Tell Boot Camp Assistant you do not want to install Windows now. It will then make you reboot.
+<li>Run Boot Camp Assistant and choose the "Restore to a single Mac OS partition" option. It should show you that the new size of your Mac volume will be as large as the entire harddisk. Confirm the restore, and you're done.
+</ol>
+
+<!-- ------------------------------------------------------------------ -->
+<h3>Resizing Windows and Linux Partitions</h3>
+
+<ul>
+<li>Read the "remove" and "show" sections of "man gpt".
+<li>Reboot using the Mac OS X install disk.
+<li>Run the terminal
+<li>Dismount all volumes
+<pre>umount /dev/disk0s2
+umount /dev/disk0s3
+umount /dev/disk0s4</pre>
+<li>Remove 3rd and 4th partitions. <b>Note:</b> Volumes are mounted automatically when you remove a partition. Dismount them again.
+<pre>gpt remove -i 3 /dev/disk0
+umount /dev/disk0s2
+umount /dev/disk0s4
+gpt remove -i 4 /dev/disk0</pre>
+  
+<li>Resize partitions as you like using diskutil 
+<pre>diskutil resizeVolume disk0s2 40G "Linux" "Linux" 51G "MS-DOS FAT32" "Windows" 20.5G</pre>
+
+<li>Check new distribution with diskutil
+<li>Reboot and reinstall Windows or Linux
+</ul>
+
+
+
+<?php include "inc_footer.php"; ?>
+</div>
+<?php include "inc_sidebar.php"; ?>
+</body>
+</html>
