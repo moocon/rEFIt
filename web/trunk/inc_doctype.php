@@ -1,10 +1,13 @@
 <?php
 // $Id$
 
-$self = $_SERVER['PHP_SELF'];
-$selfname = substr($self, strrpos($self, "/") + 1);
+// configuration: latest release and its download sizes
+$release = "0.10";
+$release_sizes = array("6.5M", "6.5M", "3.2M", "246K");
 
 // determine section and page
+$self = $_SERVER['PHP_SELF'];
+$selfname = substr($self, strrpos($self, "/") + 1);
 $section = "main";
 if (substr($self, 0, 6) == "/info/")
   $section = "info";

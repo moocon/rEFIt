@@ -47,9 +47,10 @@ On this page:
 <h2><a name="news"></a>News</h2>
 
 <p>
-<b>2007-06-12:</b> If you have a “Santa Rosa” MBP and want to test
-a new rEFIt build, feel free to grab
-<a href="http://refit.sourceforge.net/files/refit-bin-snapshot-20070612-2.tar.gz">refit-bin-snapshot-20070612-2.tar.gz</a>.
+<b>2007-06-14:</b> Version 0.10 was released. This release supports the
+recently released MacBook Pro models (“Santa Rosa” platform). All binaries
+are “fat” 32-bit and 64-bit binaries. There are no functional changes over
+0.9, so if you don’t have one of the new models there is no need to update.
 </p>
 
 <p>
@@ -64,17 +65,12 @@ still under investigation.
 in the documentation and made it more prominent in the site navigation.
 </p>
 
-<p>
-<b>2007-03-25:</b> Version 0.9 was released. This release includes the new
-“Partition Inspector” diagnostic utility and several fixes to the
-Partitioning Tool (gptsync), including a workaround for the GNU parted bug.
-</p>
-
 
 <h2><a name="download"></a>Download</h2>
 
 <p>
-The current release is 0.9. It is available in various forms.
+The current release is <?php print $release; ?>.
+It is available in various forms.
 Both disk image distributions include the Installer package and
 can be burned as a bootable CD as well.
 All three binary distributions can be used to install rEFIt
@@ -82,10 +78,10 @@ on a USB memory stick or other disk drives.
 </p>
 
 <ul>
-<li><a href="http://prdownloads.sourceforge.net/refit/rEFIt-0.9.dmg?download">rEFIt 0.9</a> (2.8M Mac disk image)</li>
-<li><a href="http://prdownloads.sourceforge.net/refit/rEFIt-0.9.cdr.gz?download">rEFIt 0.9</a> (2.8M ISO disk image)</li>
-<li><a href="http://prdownloads.sourceforge.net/refit/refit-bin-0.9.tar.gz?download">rEFIt 0.9</a> (1.4M .tar.gz)</li>
-<li><a href="http://prdownloads.sourceforge.net/refit/refit-src-0.9.tar.gz?download">rEFIt 0.9 source code</a> (245K .tar.gz)</li>
+<li><a href="http://prdownloads.sourceforge.net/refit/rEFIt-<?php print $release; ?>.dmg?download">rEFIt <?php print $release; ?></a> (<?php print $release_sizes[0]; ?> Mac disk image)</li>
+<li><a href="http://prdownloads.sourceforge.net/refit/rEFIt-<?php print $release; ?>.cdr.gz?download">rEFIt <?php print $release; ?></a> (<?php print $release_sizes[1]; ?> ISO disk image)</li>
+<li><a href="http://prdownloads.sourceforge.net/refit/refit-bin-<?php print $release; ?>.tar.gz?download">rEFIt <?php print $release; ?></a> (<?php print $release_sizes[2]; ?> .tar.gz)</li>
+<li><a href="http://prdownloads.sourceforge.net/refit/refit-src-<?php print $release; ?>.tar.gz?download">rEFIt <?php print $release; ?> source code</a> (<?php print $release_sizes[3]; ?> .tar.gz)</li>
 </ul>
 
 <p>
