@@ -8,9 +8,7 @@
 
 <ul id="sitenav" class="navlist">
 <li><a href="/">Home</a></li>
-<li><a href="/#news" class="sublink">News</a></li>
 <li><a href="/#download" class="sublink">Download</a></li>
-<li><a href="/#links" class="sublink">Links</a></li>
 <li><a href="/doc/">Documentation</a></li>
 <li><a href="/doc/c1s1_install.html" class="sublink">Installation</a></li>
 <li><a href="/doc/trouble.html" class="sublink">Troubleshooting</a></li>
