@@ -2,7 +2,7 @@
 // $Id$
 
 // configuration: latest release and its download sizes
-$release = "0.10";
+$release = "0.11";
 $release_sizes = array("6.5M", "6.5M", "3.2M", "246K");
 
 // determine section and page
