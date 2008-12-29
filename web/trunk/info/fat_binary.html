@@ -1,0 +1,182 @@
+<?php
+$vc_author = '$Author: chrisp $';
+$vc_date   = '$Date$';
+
+include "inc_doctype.php";
+?>
+<html>
+<head>
+<title>rEFIt - EFI Fat Binaries</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<?php include "inc_head.php"; ?>
+</head>
+<body>
+<?php include "inc_logo.php"; ?>
+<div id="content">
+
+<?php include "inc_trail.php"; ?>
+
+
+<h1>EFI Fat Binaries</h1>
+
+<p>
+This page describes the wrapper format used by Apple to allow the same
+EFI application file to run on both 32 bit and 64 bit firmware versions.
+</p>
+
+
+<h2>What are Fat Binaries?</h2>
+
+<p>
+A “Universal” application in Mac OS X runs at native speed on both PowerPC
+and Intel Macs.
+To do this, it contains a “fat binary” with code for both architectures.
+The build process generates one binary file for each architecture,
+then glues them together into a single file with a header pointing at the
+two parts.
+The kernel and the dynamic linker know about this header and automatically
+look at the appropriate part.
+</p>
+<p>
+Mac OS X actually uses the same mechanism to deal with 32 bit vs. 64 bit
+userspace, and <tt>/usr/lib/libSystem.dylib</tt> is a four-way
+fat binary on Mac OS X 10.5.
+(Try running <tt>file</tt> on it.)
+</p>
+
+
+<h2>EFI and Architecture Independence</h2>
+
+<p>
+The EFI and UEFI specifications do not talk about fat binaries.
+The idea of a mixed-mode firmware
+(i.e. supporting both 32 bit and 64 bit binaries at the same time)
+is ruled out because it would take too much space in the firmware ROM.
+That means that usually, applications and drivers need to be compiled
+for the same architecture as the firmware that will run them.
+</p>
+<p>
+This creates a problem for Option ROMs on add-in cards
+(e.g. a graphics card or a SCSI host adapter).
+Those don’t have space to store multiple binaries either,
+but have the desire to work on multiple platforms.
+The solution offered by the EFI standard is the EFI Byte Code (EBC).
+The EFI firmware comes with an EBC interpreter,
+and transparently loads and executes EFI binaries compiled to EBC.
+While this works for device drivers, it’s going to be hard to write
+an operating system boot loader in EBC.
+</p>
+<p>
+The EFI/UEFI standards also specify naming conventions for boot loaders,
+so that an OS installation CD can boot on multiple architectures
+by providing a separate boot loader for each one.
+(Apparently recent Mac firmware revisions respect these when booting from
+a non-BIOS boot CD, details to be confirmed.)
+</p>
+
+
+<h2>EFI Fat Binaries, Apple Style</h2>
+
+<p>
+Apple decided to extend the fat binary concept from the OS to the firmware,
+allowing them to stick to their established (and non-standard) way to
+identify the boot loader through a field in the HFS+ volume header.
+</p>
+<p>
+To pull this off, Apple had to add code to the firmware to detect the
+special header in the <tt>LoadImage</tt> function.
+And they had to make sure all Macs would have the new firmware before
+they could ship a Mac OS X update with a fat binary boot loader.
+So it is quite likely that this code has been quietly sitting in the firmware
+for a long time.
+(If anyone feels inclined to do some research, look for a Mac OS X update
+that lists a specific firmware update as an installation requirement...)
+</p>
+<p>
+The file format is similar to the one used by Mach-O,
+but uses a different magic number and little-endian byte order.
+For reference, see <tt>/usr/include/mach-o/fat.h</tt>
+and <tt>/usr/include/mach/machine.h</tt>
+on a Mac OS X system.
+</p>
+
+
+<h2>File Format</h2>
+
+<p>
+The header consists of a series of 32-bit integers in little endian notation.
+The first two establish the format of the file and the number of embedded
+files:
+</p>
+
+<table>
+<tr><th>Index</th><th>Byte Offset</th><th>Content</th></tr>
+<tr><td>0</td><td>0</td>
+  <td>Magic value: 0x0ef1fab9</td></tr>
+<tr><td>1</td><td>4</td>
+  <td>Number of embedded files</td></tr>
+</table>
+
+<p>
+Following that, a section of five 32-bit integers is repeated for
+each embedded file:
+</p>
+
+<table>
+<tr><th>Index</th><th>Byte Offset</th><th>Content</th></tr>
+<tr><td>2+5*i</td><td>8+20*i</td>
+  <td>CPU type, 0x07 for x86, 0x01000007 for x86_64</td></tr>
+<tr><td>3+5*i</td><td>12+20*i</td>
+  <td>CPU sub-type, 0x03 for generic i386, 0x03 for generic x86_64</td></tr>
+<tr><td>4+5*i</td><td>16+20*i</td>
+  <td>Offset in bytes from the beginning of the overall file</td></tr>
+<tr><td>5+5*i</td><td>20+20*i</td>
+  <td>Length in bytes</td></tr>
+<tr><td>6+5*i</td><td>24+20*i</td>
+  <td>Alignment, 0x00 for none</td></tr>
+</table>
+
+<p>
+The embedded files are not aligned in any way,
+which is reflected in the alignment field.
+While the header ends on a 4-byte boundary, the second file may very well
+start on an odd address if the first file has an odd length.
+The firmware needs to deal with that.
+</p>
+
+
+<h2>Consequences</h2>
+
+<p>
+Since fat EFI binaries are an Apple extension, they are not supported on
+non-Apple EFI systems.
+Those will look for a PE32+ header at the beginning of the file,
+not find it, and refuse to load the binary.
+On the other hand, Apple firmware will load plain EFI binaries just fine,
+but depending on the model it will expect a 32 bit or a 64 bit binary.
+(See <a href="apple_efi.html">Apple EFI History</a>.)
+</p>
+<p>
+Here’s a compatibility matrix to spell this out:
+</p>
+<table>
+<tr><th rowspan="2">Binary</th><th colspan="2">Intel Mac</th>
+  <th colspan="2">non-Apple x86 System</th></tr>
+<tr><th>32 bit</th><th>64 bit</th><th>32 bit</th><th>64 bit</th></tr>
+<tr><td>x86 Binary</td>
+  <td>Yes</td><td>No</td><td>Yes</td><td>No</td></tr>
+<tr><td>x86_64 Binary</td>
+  <td>No</td><td>Yes</td><td>No</td><td>Yes</td></tr>
+<tr><td>Fat x86+x86_64 Binary</td>
+  <td>Yes</td><td>Yes</td><td>No</td><td>No</td></tr>
+<tr><td>EBC Binary</td>
+  <td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+</table>
+
+
+
+<?php include "inc_footer.php"; ?>
+</div>
+<?php include "inc_sidebar.php"; ?>
+</body>
+</html>

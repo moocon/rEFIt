@@ -1,0 +1,149 @@
+<?php
+$vc_author = '$Author: chrisp $';
+$vc_date   = '$Date$';
+
+include "inc_doctype.php";
+?>
+<html>
+<head>
+<title>rEFIt - History of Apple and EFI</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<?php include "inc_head.php"; ?>
+</head>
+<body>
+<?php include "inc_logo.php"; ?>
+<div id="content">
+
+<?php include "inc_trail.php"; ?>
+
+
+<h1>A Brief History of Apple and EFI</h1>
+
+<p>
+This page tries to give a summary of Apple’s use of the EFI firmware.
+</p>
+
+
+<h2>Pre-Release Rumors</h2>
+
+<p>
+PowerPC Macs used Open Firmware,
+an industry standard also used by other vendors on other platforms,
+for example Sun SPARC.
+</p>
+<p>
+Prototype Intel Macs used a traditional BIOS.
+At that time Apple dropped some hints that this would not be what they’ll
+ship, and there was speculation if they were porting Open Firmware,
+going with EFI, or doing something else entirely.
+</p>
+
+
+<h2>“Early 2006” Models</h2>
+
+<p>
+When Apple released the first Intel Macs, it turned out they were using EFI.
+They used Intel Core Duo (note the lack of a “2”) and Core Solo processors,
+which were 32 bit, and so the firmware was 32 bit as well.
+Apple used the EFI 1.10 standard, and seemed to be working off of Intel’s
+reference implementation, now partially open-sourced as
+“<a href="http://www.tianocore.org/">TianoCore</a>”.
+</p>
+<p>
+The first firmware revisions actually had the generic text-based
+configuration menus aimed at PCs still in there,
+and you could access them by setting the boot loader to any EFI binary
+that would exit and return to the firmware
+(rather than staying running or loading an OS).
+Apple quickly removed this, because people were bricking their iMacs.
+</p>
+<p>
+The first firmware revisions also didn’t have any BIOS compatibility.
+This spawned a lot of elilo hacking, the development of rEFIt,
+and a contest for getting Windows XP running.
+That contest was actually won by the “XoM” hack mere days before Apple
+released a firmware update with BIOS compatibility.
+(It is unknown if Apple rushed their schedule because of XoM,
+or if this was just coincidence.)
+</p>
+<p>
+Note that the initial “Boot Camp” release actually consisted of three pieces
+released at the same time:
+</p>
+<ul>
+<li>A set of firmware updates that added BIOS emulation,
+including “Windows”<sup>*</sup> support in
+the built-in boot volume chooser.</li>
+<li>A Mac OS X update that added
+HFS+ online resizing in the kernel, diskutil and Disk Utility,
+hybrid GPT/MBR support in diskutil and Disk Utility, and
+Windows support in Startup Disk.</li>
+<li>The “Boot Camp Assistant” application, containing a nice GUI for the
+online resizing and a CD disk image with Windows drivers.</li>
+</ul>
+
+<p><sup>*</sup>
+Humoristic side note: The chooser would happily present
+a Linux boot CD or a Linux install on the hard disk as “Windows”,
+hence the quotes in the text.
+</p>
+
+<h2>“Late 2006” Models</h2>
+
+<p>
+These models started using Intel Core 2 Duo processors,
+which were 64 bit capable.
+The EFI firmware was still 32 bit and plain EFI 1.10.
+</p>
+
+
+<h2>“Santa Rosa” Models</h2>
+
+<p>
+For the models with Intel’s “Santa Rosa” chipset (and Core 2 Duo processors)
+Apple did something strange.
+The firmware went 64 bit, but was still EFI 1.10.
+This combination doesn’t appear in any specification; x86_64 support was only
+added in the UEFI 2.0 standard.
+(Luckily the development environments and binaries are compatible,
+as long as you’re prepared to use only EFI 1.10 protocols and functions.)
+</p>
+<p>
+Apple also introduced <a href="fat_binary.html">fat EFI binaries</a>,
+so that the same Mac OS X install could boot on both 32-bit and 64-bit machines
+without further tricks.
+Actually, they must have put the code to deal with fat EFI binaries in the
+firmware of older models for a while before that, since the format
+is (necessarily) incompatible with plain EFI binaries.
+</p>
+<p>
+The format of the fat EFI binaries has never been officially published
+or standardized, meaning that non-Apple EFI systems won’t support it,
+and cannot directly load the Mac OS X “boot.efi” boot loader.
+(The format is easily reverse engineered; see the
+<a href="fat_binary.html">fat EFI binaries</a> page for a description.)
+</p>
+
+
+<h2>“Late 2008” Models</h2>
+
+<p>
+These models used an NVIDIA chipset with integrated graphics.
+The firmware was 64 bit like in the Santa Rosa models,
+and also still identified itself as EFI 1.10.
+</p>
+<p>
+However, Apple started mixing EFI 1.10 and UEFI 2.x features on these models.
+Depending on the model and the graphics mode, the graphics driver may expose
+both the UgaDraw protocol (EFI 1.x) and the GraphicsOutput protocol (UEFI 2.x),
+while in other modes it exposes only the GraphicsOutput protocol.
+All earlier models only expose the UgaDraw protocol.
+It’s best to just be prepared to use whichever one is available.
+</p>
+
+
+<?php include "inc_footer.php"; ?>
+</div>
+<?php include "inc_sidebar.php"; ?>
+</body>
+</html>
