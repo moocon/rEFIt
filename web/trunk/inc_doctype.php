@@ -2,8 +2,8 @@
 // $Id$
 
 // configuration: latest release and its download sizes
-$release = "0.13";
-$release_sizes = array("6.5M", "6.5M", "3.2M", "251K");
+$release = "0.14";
+$release_sizes = array("6.5M", "6.5M", "3.2M", "253K");
 
 // determine section and page
 $self = $_SERVER['PHP_SELF'];
