@@ -1,0 +1,77 @@
+<?php
+$vc_author = '$Author: chrisp $';
+$vc_date   = '$Date$';
+
+include "inc_doctype.php";
+?>
+<html>
+<head>
+<title>rEFIt - Troubleshooting</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<?php include "inc_head.php"; ?>
+</head>
+<body>
+<?php include "inc_logo.php"; ?>
+<div id="content">
+
+<?php include "inc_trail.php"; ?>
+
+
+<h1>rEFIt Troubleshooting</h1>
+
+<p>
+Running multiple operating systems on an Intel Mac doesn’t always work
+as expected.
+Here are some common problems with explanations.
+</p>
+
+<h2>Installation</h2>
+<dl>
+<dt>I just installed rEFIt, but the menu doesn’t show up.</dt>
+<dd>It takes two reboots after using the package installer.
+<a href="install_reboot.html">More...</a></dd>
+<dt>I rebooted twice, and the menu still doesn’t show up.</dt>
+<dd>Other software on your Mac may be interfering with the Mac OS X shutdown
+sequence.</dt>
+<a href="install_reboot.html">More...</a></dd>
+<dt>Can I use rEFIt with PGP Whole Disk Encryption?</dt>
+<dd>Reportedly a manual install to the hidden bootstrap partition works.
+<a href="pgp_wde.html">More...</a></dd>
+</dl>
+
+<h2>The rEFIt Menu</h2>
+<dl>
+<dt>My Bluetooth keyboard doesn’t work in the menu.</dt>
+<dd>It takes a keypress and a few seconds to reconnect.
+<a href="bluetooth-keyboard.html">More...</a></dd>
+<dt>My Apple aluminum keyboard doesn’t work in the menu.</dt>
+<dd>This is a known problem on older Intel Macs.
+<a href="aluminum-keyboard.html">More...</a></dd>
+</dl>
+
+<h2>Booting</h2>
+<dl>
+<dt>I can’t boot Windows/Linux from a USB hard disk.</dt>
+<dd>This is not well-supported by Apple’s firmware.
+<a href="usb_disk.html">More...</a></dd>
+<dt>I can’t boot Windows/Linux from the second internal hard disk.</dt>
+<dd>This is not explicitly supported by rEFIt at this time.
+<a href="multiple_disks.html">More...</a></dd>
+<dt>I can’t boot Mac OS X from the RAID set.</dt>
+<dd>This is not explicitly supported by rEFIt at this time.
+<a href="raid.html">More...</a></dd>
+</dl>
+
+<h2>Other Resources</h2>
+
+<p>
+Check out Apple’s
+<a href="http://www.apple.com/support/bootcamp/">Boot Camp Support</a> page.
+</p>
+
+
+<?php include "inc_footer.php"; ?>
+</div>
+<?php include "inc_sidebar.php"; ?>
+</body>
+</html>

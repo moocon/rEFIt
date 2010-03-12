@@ -13,6 +13,8 @@ if (substr($self, 0, 6) == "/info/")
   $section = "info";
 if (substr($self, 0, 5) == "/doc/")
   $section = "doc";
+if (substr($self, 0, 6) == "/help/")
+  $section = "help";
 $index_html = 0;
 if ($selfname == "index.html")
   $index_html = 1;

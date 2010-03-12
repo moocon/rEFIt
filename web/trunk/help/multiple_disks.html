@@ -1,0 +1,45 @@
+<?php
+$vc_author = '$Author: chrisp $';
+$vc_date   = '$Date$';
+
+include "inc_doctype.php";
+?>
+<html>
+<head>
+<title>rEFIt - Troubleshooting - Multiple Internal Disks</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<?php include "inc_head.php"; ?>
+</head>
+<body>
+<?php include "inc_logo.php"; ?>
+<div id="content">
+
+<?php include "inc_trail.php"; ?>
+
+
+<h1>Multiple Internal Disks</h1>
+
+<p>
+Booting Windows or Linux from the second (third, fourth, ...) internal hard
+disk through rEFIt currently does not work as expected.
+</p>
+<p>
+According to Apple’s
+<a href="http://support.apple.com/kb/HT3777">Boot Camp FAQ</a>
+any internal disk works,
+so you may be able to boot from the second disk using the built-in boot menu.
+Hold down the Option key during startup to activate that boot menu.
+</p>
+<p>
+It may be possible to properly support booting from the second disk in rEFIt,
+but the author currently lacks a suitable test system.
+If you can help investigate this and are willing to test patched rEFIt builds,
+please get in touch.
+</p>
+
+
+<?php include "inc_footer.php"; ?>
+</div>
+<?php include "inc_sidebar.php"; ?>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<?php
+$vc_author = '$Author: chrisp $';
+$vc_date   = '$Date$';
+
+include "inc_doctype.php";
+?>
+<html>
+<head>
+<title>rEFIt - Troubleshooting - Reboot after Install</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<?php include "inc_head.php"; ?>
+</head>
+<body>
+<?php include "inc_logo.php"; ?>
+<div id="content">
+
+<?php include "inc_trail.php"; ?>
+
+
+<h1>Reboot after Install</h1>
+
+<p>
+On Mac OS X 10.5 (Leopard) and 10.6 (Snow Leopard) the rEFIt boot menu
+does not appear on the first reboot after using the package installer.
+Just reboot the Mac again. (You don’t need to log in first.)
+</p>
+<p>
+If the rEFIt menu does not appear on the second reboot,
+other software on your Mac may be interfering with the Mac OS X shutdown
+sequence.
+That can cause the <tt>rEFItBlesser</tt> startup item to not be run, and the
+Mac will boot straight into Mac OS X on the next boot.
+Further details are still under investigation.
+</p>
+
+
+<?php include "inc_footer.php"; ?>
+</div>
+<?php include "inc_sidebar.php"; ?>
+</body>
+</html>

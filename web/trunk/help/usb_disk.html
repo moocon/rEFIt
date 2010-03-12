@@ -1,0 +1,50 @@
+<?php
+$vc_author = '$Author: chrisp $';
+$vc_date   = '$Date$';
+
+include "inc_doctype.php";
+?>
+<html>
+<head>
+<title>rEFIt - Troubleshooting - USB Disks</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<?php include "inc_head.php"; ?>
+</head>
+<body>
+<?php include "inc_logo.php"; ?>
+<div id="content">
+
+<?php include "inc_trail.php"; ?>
+
+
+<h1>USB Disks</h1>
+
+<p>
+Note: The following applies not just to USB hard disks, but to any storage
+device that is not considered "internal".
+That includes USB flash drives, SD cards and other memory cards,
+as well as hard drives attached through Firewire or other connections.
+</p>
+<p>
+Booting Windows or Linux from an external disk is not well-supported by
+Apple’s firmware.
+It may work for you, but if it does not work, there is nothing rEFIt can
+do about it.
+</p>
+<p>
+Apple’s <a href="http://support.apple.com/kb/HT3777">Boot Camp FAQ</a>
+states that you can only install Windows on internal hard drives.
+</p>
+<p>
+Note that at least Windows XP needs special patches to successfully boot
+from a USB or Firewire drive. That’s because it normally re-initializes
+the driver stack during the boot process in a way that disrupts its own access
+to the boot drive.
+</p>
+
+
+<?php include "inc_footer.php"; ?>
+</div>
+<?php include "inc_sidebar.php"; ?>
+</body>
+</html>

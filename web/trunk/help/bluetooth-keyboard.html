@@ -1,0 +1,62 @@
+<?php
+$vc_author = '$Author: chrisp $';
+$vc_date   = '$Date$';
+
+include "inc_doctype.php";
+?>
+<html>
+<head>
+<title>rEFIt - Troubleshooting - Bluetooth Keyboards</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<?php include "inc_head.php"; ?>
+</head>
+<body>
+<?php include "inc_logo.php"; ?>
+<div id="content">
+
+<?php include "inc_trail.php"; ?>
+
+
+<h1>Bluetooth Keyboards</h1>
+
+<p>
+In general, Bluetooth keyboards that you have paired with the Mac
+<i>should</i> work in the rEFIt menu.
+Since the EFI pre-boot environment (in which the rEFIt menu runs) is
+a separate operating environment from Mac OS X or Windows,
+the keyboard needs to reconnect after you enter the rEFIt menu.
+The keyboard needs to initiate the connection, which it only does after you
+press a key.
+Establishing the wireless connection can take a few seconds,
+and the first keypress may be lost.
+</p>
+<p>
+During installation of Windows, Bluetooth support will be unavailable,
+and you need to use a USB or built-in keyboard.
+Once Windows and the Boot Camp drivers are installed, you can pair the
+Bluetooth keyboard in Windows and it should work normally.
+Apple also explains this in the
+<a href="http://support.apple.com/kb/HT3777">Boot Camp FAQ</a>.
+</p>
+<p>
+You’ll likely have similar results with Linux, that is,
+the Bluetooth keyboard will only work once Linux is fully installed,
+and the keyboard has been paired with the Linux Bluetooth stack.
+Even then, it may not be possible to use the keyboard to make choices in the
+Linux boot menu (GRUB, LILO, etc.).
+</p>
+<p>
+If you have problems with the wireless keyboard, there is nothing rEFIt can
+do about it.
+Use a USB keyboard or a built-in keyboard instead.
+See also Apple’s
+<a href="http://support.apple.com/kb/HT1899">System requirements for
+Microsoft Windows</a> support document.
+</p>
+
+
+<?php include "inc_footer.php"; ?>
+</div>
+<?php include "inc_sidebar.php"; ?>
+</body>
+</html>

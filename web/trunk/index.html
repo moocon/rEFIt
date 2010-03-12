@@ -34,10 +34,11 @@ the EFI pre-boot environment.
 On this page:
 <a href="#news">News</a>
 - <a href="#download">Download</a>
+- <a href="#help">Troubleshooting</a>
 - <a href="#rsrc">Resources</a>
 <br>Other pages:
 <a href="doc/">Documentation</a>
-- <a href="history.html">Version History</a>
+- <a href="help/">Troubleshooting</a>
 - <a href="screen.html">Screenshot</a>
 - <a href="myths/">Myths and Facts</a>
 </p>
@@ -46,16 +47,15 @@ On this page:
 <h2><a name="news"></a>News</h2>
 
 <p>
-<b>2010-03-07:</b> Version 0.14 was released. This release adds a configuration
-option for the default boot choice, fixes the Linux/GRUB detection issue, and
-fixes Snow Leopard 64-bit issues.
+<b>2010-03-12:</b> The site has a new
+<a href="help/">troubleshooting section</a>.
+Some common problems are also listed below.
 </p>
 
 <p>
-<b>2009-03-23:</b> Version 0.13 was released. This release supports the
-new Mac Pro models, and should automatically support future Mac models with
-changes to the firmware memory layout. It also adds NetBSD detection and
-fixes issues with case-sensitive file systems.
+<b>2010-03-07:</b> Version 0.14 was released. This release adds a configuration
+option for the default boot choice, fixes the Linux/GRUB detection issue, and
+fixes Snow Leopard 64-bit issues.
 </p>
 
 
@@ -82,6 +82,25 @@ You can browse the source code online through the
 <a href="http://refit.svn.sourceforge.net/viewvc/refit/trunk/">ViewVC interface</a>
 to the Subversion repository at SourceForge.
 </p>
+
+
+<h2><a name="help"></a>Troubleshooting</h2>
+
+<p>
+See the <a href="help/">troubleshooting section</a> for a full list.
+Here are a few common problems:
+</p>
+<dl>
+<dt>I just installed rEFIt, but the menu doesn’t show up.</dt>
+<dd>It takes two reboots after using the package installer.
+<a href="help/install_reboot.html">More...</a></dd>
+<dt>I can’t boot Windows/Linux from a USB hard disk.</dt>
+<dd>This is not well-supported by Apple’s firmware.
+<a href="help/usb_disk.html">More...</a></dd>
+<dt>I can’t boot Windows/Linux from the second internal hard disk.</dt>
+<dd>This is not explicitly supported by rEFIt at this time.
+<a href="help/multiple_disks.html">More...</a></dd>
+</dl>
 
 
 <h2><a name="rsrc"></a>Resources</h2>

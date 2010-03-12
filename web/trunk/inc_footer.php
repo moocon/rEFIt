@@ -20,6 +20,7 @@ if ($section == "doc") {
 
 // Automatic "last changed" info from Subversion
 if ($vc_author) {
+  date_default_timezone_set("Europe/Berlin");
   if (substr($vc_author,0,1) == "$")
     $vc_author = rtrim(substr($vc_author, 1, -1));
   if (substr($vc_date,0,1) == "$")
@@ -38,6 +39,6 @@ if ($vc_author) {
 }
 
 ?>
-<p id="copyright">Copyright &copy; 2006-2008 Christoph Pfisterer</p>
+<p id="copyright">Copyright &copy; 2006-2010 Christoph Pfisterer</p>
 <div id="footerclear"></div>
 </div>

@@ -1,0 +1,40 @@
+<?php
+$vc_author = '$Author: chrisp $';
+$vc_date   = '$Date$';
+
+include "inc_doctype.php";
+?>
+<html>
+<head>
+<title>rEFIt - Troubleshooting - PGP Whole Disk Encryption</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<?php include "inc_head.php"; ?>
+</head>
+<body>
+<?php include "inc_logo.php"; ?>
+<div id="content">
+
+<?php include "inc_trail.php"; ?>
+
+
+<h1>PGP Whole Disk Encryption</h1>
+
+<p>
+If you are using
+<a href="http://www.pgp.com/products/wholediskencryption/index.html">PGP Whole Disk Encryption</a>
+with Mac OS X, the usual install methods won't work,
+because they install rEFIt on the encrypted partition.
+</p>
+<p>
+Reportedly, PGP Whole Disk Encryption uses an additional hidden HFS+ partition
+for bootstrapping, and manually installing rEFIt there works.
+Obviously, you won't have access to the encrypted partition if you use rEFIt
+to boot another operating system.
+</p>
+
+
+<?php include "inc_footer.php"; ?>
+</div>
+<?php include "inc_sidebar.php"; ?>
+</body>
+</html>

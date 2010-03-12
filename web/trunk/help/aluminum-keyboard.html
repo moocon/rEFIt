@@ -1,0 +1,44 @@
+<?php
+$vc_author = '$Author: chrisp $';
+$vc_date   = '$Date$';
+
+include "inc_doctype.php";
+?>
+<html>
+<head>
+<title>rEFIt - Troubleshooting - Apple Aluminum Keyboards</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<?php include "inc_head.php"; ?>
+</head>
+<body>
+<?php include "inc_logo.php"; ?>
+<div id="content">
+
+<?php include "inc_trail.php"; ?>
+
+
+<h1>Apple Aluminum Keyboards</h1>
+
+<p>
+This is a known problem with the new Apple USB keyboards (aluminum body)
+and older Intel Macs (e.g. Early 2006 and Mid 2006 models).
+The keyboard works in Mac OS X, but does not work in the rEFIt menu.
+It also does not work in the built-in boot menu, since there is a general
+incompatibility between these newer Apple keyboards and the EFI firmware in
+the affected Mac models.
+</p>
+<p>
+There is nothing rEFIt can do about this, since it is a driver problem
+in Apple’s firmware.
+If you want this to work, ask Apple to fix the firmware.
+</p>
+<p>
+The older Apple keyboards (the “white” ones) are known to work.
+</p>
+
+
+<?php include "inc_footer.php"; ?>
+</div>
+<?php include "inc_sidebar.php"; ?>
+</body>
+</html>
