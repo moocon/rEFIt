@@ -1,0 +1,53 @@
+<?php
+$vc_author = '$Author$';
+$vc_date   = '$Date$';
+
+include "inc_doctype.php";
+?>
+<html>
+<head>
+<title>rEFIt - Documentation - Solaris shows as Linux</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<?php include "inc_head.php"; ?>
+</head>
+<body>
+<?php include "inc_logo.php"; ?>
+<div id="content">
+
+<?php include "inc_trail.php"; ?>
+
+
+<h1>Solaris shows as Linux</h1>
+
+<p>
+Solaris uses GRUB, a boot loader for multiple operating systems that is the
+de-facto standard on Linux as well.
+rEFIt has no way to detect which operating systems you have
+configured in GRUB;
+there could even be multiple operating systems on different
+partitions or disks.
+All rEFIt can detect is the presence of GRUB, and it assumes that means you
+have Linux installed.
+</p>
+<p>
+You can change the icon displayed in the rEFIt menu.
+When rEFIt detects GRUB, it will first look for an icon named “os_grub.icns”,
+and only use “os_linux.icns” if it can’t be found.
+Once you place an ICNS-format icon in /efi/refit/icons and name it
+“os_grub.icns”, that one will be used for your Solaris partition.
+</p>
+<p>
+There is currently no way to configure the text displayed in the rEFIt menu
+(“Boot Linux from ...”),
+and there is no way to display the correct icon if you have both Linux and
+Solaris installed.
+This may be made configurable in the future, but will require a rewrite of
+significant portions of the rEFIt code base.
+</p>
+
+
+<?php include "inc_footer.php"; ?>
+</div>
+<?php include "inc_sidebar.php"; ?>
+</body>
+</html>
