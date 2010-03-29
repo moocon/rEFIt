@@ -1,0 +1,71 @@
+<?php
+$vc_author = '$Author$';
+$vc_date   = '$Date$';
+
+include "inc_doctype.php";
+?>
+<html>
+<head>
+<title>rEFIt - Documentation - Choosing Windows boots Linux</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<?php include "inc_head.php"; ?>
+</head>
+<body>
+<?php include "inc_logo.php"; ?>
+<div id="content">
+
+<?php include "inc_trail.php"; ?>
+
+
+<h1>Choosing Windows boots Linux</h1>
+
+<p>
+This can have many different reasons. Check these first:
+</p>
+<ul>
+<li>If you are trying to boot from a USB hard disk or other “external” drive,
+but the system boots another operating system from an internal drive instead,
+see <a href="usb_disk.html">USB Disks</a>.</li>
+<li>If you have multiple internal disks, and the system boots an operating
+system from another disk than the one you chose in the menu, see
+<a href="multiple_disks.html">Multiple Internal Disks</a>.</li>
+</ul>
+
+<p>
+If you have both Windows and Linux installed on the same internal disk,
+and choosing Windows in the rEFIt boot menu boots Linux,
+the likely cause is that your Linux system installed its boot loader
+(GRUB, LILO, etc.) in the Master Boot Record (MBR) instead of the partition
+boot record (PBR).
+Due to the way rEFIt works, choosing either of the operating systems
+in the rEFIt menu starts the Linux boot loader installed in the MBR.
+In the best case that boot loader then presents you with another menu
+where you can choose between Windows and Linux,
+and in the worst case it just loads Linux without giving you a chance
+to get into Windows.
+</p>
+<p>
+You can confirm that this affects your system by running the
+“Partition Inspector” application that is on the rEFIt disk image,
+and is usually installed under /Applications/Utilities.
+When you run it, it looks at the partitions and file systems on the first
+hard disk, and generates a report.
+You are affected if the report contains something like this:
+</p>
+<pre>
+MBR contents:
+ Boot Code: GRUB
+</pre>
+<p>
+To fix this problem, you need to install GRUB / LILO in the boot sector of
+your Linux partition instead, then remove it from the MBR.
+I’m not aware of a ready-made tool that can safely do that removal.
+Please ask for help on a Linux forum if needed.
+</p>
+
+
+<?php include "inc_footer.php"; ?>
+</div>
+<?php include "inc_sidebar.php"; ?>
+</body>
+</html>

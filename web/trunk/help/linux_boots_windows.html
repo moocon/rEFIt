@@ -1,0 +1,61 @@
+<?php
+$vc_author = '$Author$';
+$vc_date   = '$Date$';
+
+include "inc_doctype.php";
+?>
+<html>
+<head>
+<title>rEFIt - Documentation - Choosing Linux boots Windows</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<?php include "inc_head.php"; ?>
+</head>
+<body>
+<?php include "inc_logo.php"; ?>
+<div id="content">
+
+<?php include "inc_trail.php"; ?>
+
+
+<h1>Choosing Linux boots Windows</h1>
+
+<p>
+This can have many different reasons. Check these first:
+</p>
+<ul>
+<li>If you are trying to boot from a USB hard disk or other “external” drive,
+but the system boots another operating system from an internal drive instead,
+see <a href="usb_disk.html">USB Disks</a>.</li>
+<li>If you have multiple internal disks, and the system boots an operating
+system from another disk than the one you chose in the menu, see
+<a href="multiple_disks.html">Multiple Internal Disks</a>.</li>
+</ul>
+
+<p>
+If you just installed Windows, it is possible that you had the Linux boot
+loader (GRUB, LILO, etc.) installed in the Master Boot Record (MBR),
+and Windows overwrote that during installation.
+To do triple-booting with rEFIt, the Linux boot loader needs to be installed
+in the partition boot record (PBR) instead of the MBR anyway.
+To restore your Linux system to bootable state, boot a rescue system from CD
+and re-install the boot loader, making sure it goes into the PBR.
+For example, point it at <tt>/dev/sda3</tt> (assuming Linux is on the third
+partition) instead of <tt>/dev/sda</tt>.
+In GRUB notation, that’s <tt>(hd0,2)</tt> instead of <tt>(hd0)</tt>.
+</p>
+
+<p>
+To check if the boot loaders are installed in the right places,
+you can run the “Partition Inspector” application that is on the rEFIt
+disk image, and is usually installed under /Applications/Utilities.
+It looks at the partitions and file systems on the first hard disk,
+and generates a report,
+including which boot loaders were found in each partition and in the MBR.
+</p>
+
+
+<?php include "inc_footer.php"; ?>
+</div>
+<?php include "inc_sidebar.php"; ?>
+</body>
+</html>
