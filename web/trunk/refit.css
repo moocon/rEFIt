@@ -161,6 +161,17 @@ p#copyright {
   clear: both;
 }
 
+.highlight {
+  border-left: 12px solid #f46800;
+  border-right: 12px solid #f46800;
+  border-top: 2px solid #f46800;
+  border-bottom: 2px solid #f46800;
+  margin-left: -4pt;
+  margin-right: -4pt;
+  padding: 0.5em 0.7em;
+  background-color: #fcefcc;
+}
+
 /*** sidebar styles ***/
 
 #sitelogo, #sflogo, #sfnavhead {
